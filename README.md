@@ -1,6 +1,8 @@
 # WeightExchange
 
 Exchange Weight App
+This is a repository for a mobile app designed to help individuals keep track of weight changes as well as diet intakes. A continuation of the work done by Covid-NineTeam in 2021 and team Corrupt in 2020.
+
 <h3>Client</h3>
 
 Dr. Ramata Cisse
@@ -23,8 +25,6 @@ Chris: Testing Lead
 
 # Description
 <details><summary>Expand</summary>
-This is a repository for a mobile app designed to help individuals keep track of weight changes as well as diet intakes. A continuation of the work done by Covid-NineTeam in 2021 and team Corrupt in 2020.
-
 Dr. Ramata and team Cup-O'JavaScript team up to create an app to encourage people to meet their weight management goals.
 Users of the app should gain motivation from others with similar goals to encourage them to continue their goals.
 Weight is “exchanged” between users to allow each other to reach their desired weight. Mass cannot be created or destroyed but is rather transferred from those with excess to those who require more.
