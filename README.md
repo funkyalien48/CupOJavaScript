@@ -105,7 +105,7 @@ Windows 10 & Mac OS
  
 4.Follow the steps to create a Firebase Project
  
-5.Naviagte to the project settings
+5.Navigate to the project settings
  
 6.Select the web platform under "Your Apps" section.
  
