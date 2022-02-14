@@ -77,7 +77,7 @@ Weight is “exchanged” between users to allow each other to reach their desir
 <h3>Node.js</h3>
 Windows 10 & Mac OS
 
-1.Go to the site https://nodejs.org/en/download/Download Node.js Installer for Windows
+1.Go to the site https://nodejs.org/en/download/ Node.js Installer for Windows & Mac
  
 2.Download the necessary binary files and the Node.js installer
  
