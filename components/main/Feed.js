@@ -7,11 +7,9 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import colors from '../../assets/colors/colors'
 
-export default function Feed() 
-{
-    //calorie log  
-    ///** lookup how to take collections in firebase   make new collection under current user then start current collect. 
-    // can a sub collection run under each user where they can enter their calories and it log (name,date,calories)
+export default function Feed() {
+
+    // Set today's date to track calories for today
     let today = new Date();
     let logDate = today.toDateString(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate());
 
@@ -40,8 +38,7 @@ export default function Feed()
     let newFoodCalories = "";
     
 
-    function updateFeed()
-    {
+    function updateFeed() {
         usersDB.doc(userID).collection("DailyFood").add(newDailyFood)
         .then((result) => {
             console.log(result)
@@ -54,10 +51,9 @@ export default function Feed()
         setUserDataIsRetrieved(false);
     }
       
-    const getUserInfo = () =>
-    {
-        usersDB.doc(userID).get().then((snapshot => 
-            {
+    const getUserInfo = () => {
+        usersDB.doc(userID).get()
+        .then((snapshot => {
                 setSex(snapshot.data().sex);
                 setWeight(snapshot.data().weight);
                 setFeet(snapshot.data().feet);
@@ -67,53 +63,50 @@ export default function Feed()
 
                 calculateCalories();
             }))
-        
-        usersDB.doc(userID).collection("DailyFood").get().then(function(querySnapshot)
-            {
-                let dailyFoodData = querySnapshot.docs.map(doc => doc.data())
-                setDailyFood(dailyFoodData);
-                setSplitDailyFood(dailyFoodData.slice(0, 5))
 
-                setUserDataIsRetrieved(true);
-
-                changeDailyCalories();
-
-            }).catch(function(error) {console.log('Error getting documents: ', error)})
+        // Retreieve DailyFood collection that stores the different food tracked for the current date which is stored in the logDate variable
+        usersDB.doc(userID).collection('DailyFood').where('createdAt', '==', logDate).get()
+        .then((querySnapshot) => {
+            let dailyFoodData = querySnapshot.docs.map(doc => doc.data());
+            setDailyFood(dailyFoodData);
+            setSplitDailyFood(dailyFoodData.slice(0, 5));
+            setUserDataIsRetrieved(true);
+            changeDailyCalories();
+        })
+        .catch((error) => {
+            console.log('Error getting documents: ', error);
+        });
     }
 
-    function validateFoodInputs(name, calories)
-    {
+    function validateFoodInputs(name, calories) {
         let errorMsg = 'Invalid fields:';
         let isError = false;
 
-        if (name == "")
-        {
+        if (name == "") {
             errorMsg += '\nName';
             isError = true;
         }
 
-        if (calories == "" || calories < 0)
-        {
+        if (calories == "" || calories < 0) {
             errorMsg += '\nCalories';
             isError = true;
         }
 
         //If an error was detected.
-        if (isError == true)
-        {
+        if (isError == true) {
             alert(errorMsg);
             isError = false;
         }
         //If everything is valid
-        else
-        {
+        else {
             typeNewFood(name, calories);
         }
     }
 
-    function typeNewFood(name, calories)
-    {
-        newDailyFood = {name: name, calories: calories};
+    function typeNewFood(name, calories) {
+        let timestamp = logDate;
+
+        newDailyFood = {name: name, calories: calories, createdAt: timestamp};
         // let id = Object.keys(newDailyFood).length + 1;
         // newDailyFood[id] = {name: name, calories: calories};
         updateFeed();
@@ -122,14 +115,11 @@ export default function Feed()
         changeDailyCalories();
     }
 
-    function changeDailyCalories()
-    {
+    function changeDailyCalories() {
         let currentCals = 0;
 
-        if (dailyFood != null)
-        {
-            for (let i = 0; i < dailyFood.length; i++)
-            {
+        if (dailyFood != null) {
+            for (let i = 0; i < dailyFood.length; i++) {
                 currentCals += parseFloat(dailyFood[i].calories);
             }
         }
@@ -140,17 +130,14 @@ export default function Feed()
     //Recommended calories to maintain weight   
     //BMR 
     //Harris-Benedict Formula
-    function calculateCalories()
-    {
+    function calculateCalories() {
         let calories = "";
 
-        if (sex == "male") 
-        {
+        if (sex == "male") {
             calories = (66 + (6.3 * weight) + Number(12.9 * totalHeight) - (6.8 * age));
             setRecommendedCalories(calories);
         } 
-        else 
-        {
+        else {
             calories = (65 + (4.3 * weight) + Number(4.7 * totalHeight) - (4.7 * age))
             setRecommendedCalories(calories);
         }
@@ -158,31 +145,25 @@ export default function Feed()
         calculatePurposeCalories(calories);
     }
 
-    const continueList = (start, end) =>
-    {
+    const continueList = (start, end) => {
         setSplitDailyFood(splitDailyFood.concat(dailyFood.slice(start, end)));
         setStartIndex(startIndex + 5);
         setEndIndex(endIndex + 5);
     }
 
     //calculates calories needed to gain or lose weight depending on user's purpose
-    function calculatePurposeCalories(calories)
-    {
-        if (purpose == "donate")
-        {
+    function calculatePurposeCalories(calories) {
+        if (purpose == "donate") {
             setPurposeCalories(calories - 500);
         }
-        else
-        {
+        else {
             setPurposeCalories(calories + 500);
         }   
     }
 
-    if (userDataIsRetrieved == false)
-    {
+    if (userDataIsRetrieved == false) {
         getUserInfo();
     }
-
     
 
     return (
@@ -240,13 +221,12 @@ export default function Feed()
                     data={dailyFood}
                     renderItem={({item}) => 
                         <View style = {styles.foodData}>
-                            {/* <TouchableOpacity onPress = {() => togglePopup(item)}> */}
+                            {item.createdAt === logDate &&
                                 <View style={{ flex: 1, flexDirection: 'row'}}>
-                                    <Text style= {styles.foodName}>{item.name}{" "}</Text>
-                                    <Text style= {styles.foodCalories}>{item.calories}</Text>
-                                    {/* <Text style = {styles.foodCalories}>{item.calories}{'\n'}</Text> */}
-                                </View>
-                            {/* </TouchableOpacity> */}
+                                <Text style= {styles.foodName}>{item.name}{" "}</Text>
+                                <Text style= {styles.foodCalories}>{item.calories}</Text>
+                            </View>
+                            }
                         </View>}
                     onEndReached = {() => continueList(startIndex, endIndex)}
                     onEndReachedThreshold = {1}
@@ -259,62 +239,50 @@ export default function Feed()
     );
 }   
 
-const styles =
-{
-    contentCenter:
-    {
+const styles = {
+    contentCenter: {
         height: '100%',
         alignItems: 'center'
     },
-    feedScreen:
-    {
+    feedScreen: {
         height: '100%',
         width: '100%',
         backgroundColor: "#FFFFFF"
     },
-    feedData:
-    {
+    feedData: {
         fontSize: 20,
     },
-    feedRow:
-    {
+    feedRow: {
         flexDirection: 'row',
     },
-    calorieInput:
-    {
+    calorieInput: {
         fontSize: 20,
         width: 50
     },
-    nameInput:
-    {
+    nameInput: {
         fontSize: 20,
         width: 200
     },
-    outerScreen: 
-    {
+    outerScreen:  {
         position: 'absolute',
         left: 0,
         right: 0,
         top: 0,
         height: '100%'
     },
-    pageHeader:
-    {
+    pageHeader: {
         fontSize: 30,
         fontFamily: 'NunitoSans-Bold',
         color: '#000000'
     },
-    foodData: 
-    {
+    foodData: {
     },
-    foodName:
-    {
+    foodName: {
         fontSize: 20,
         color: '#000',
         fontFamily: 'NunitoSans-Bold',
     },
-    foodCalories:
-    {
+    foodCalories: {
         fontSize: 20,
         color: '#000',
         fontFamily: 'NunitoSans-Regular',
