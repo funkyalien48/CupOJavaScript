@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { StatusBar } from 'expo-status-bar'
 import fire from '../fire'
-import { Text, View, FlatList, Image, Modal, TouchableOpacity } from 'react-native'
+import { Text, View, FlatList, Image, Modal, TouchableOpacity, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../../assets/colors/colors';
@@ -159,6 +159,24 @@ export default function Userlist()
             <StatusBar barStyle='light-content' />
             <Text style = {styles.pageHeader}>List of Users</Text>
             <View style = {styles.innerScreen}>
+                <View style={styles.topNav}>
+                    <Pressable
+                        style={styles.navLink}
+                        title="Button 1"
+                        onPress={() => {
+                        console.log("Button 1 clicked")
+                    }}>
+                        <Text>Users</Text>
+                    </Pressable>
+                    <Pressable
+                        style={styles.navLink}
+                        title="Button 1"
+                        onPress={() => {
+                        console.log("Button 2 clicked")
+                    }}>
+                        <Text>Friend Request's</Text>
+                    </Pressable>
+                </View>
                 {splitUserList != null &&
                     <FlatList
                     data={splitUserList}
@@ -293,5 +311,19 @@ const styles =
         marginLeft: 290,
         fontSize: 30,
         opacity: 0.3
+    },
+    topNav: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        padding: '5px'
+    },
+    navLink: {
+        backgroundColor: '#ccc',
+        borderRadius: '5px',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        width: '49.5%',
+        textAlign: 'center'
     }
 }
