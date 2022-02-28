@@ -10,7 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import FeedScreen from './main/Feed'
 import ProfileScreen from './main/Profile'
-import UserlistScreen from './main/Userlist'
+import SocialScreen from './main/Social'
 
 const Tab = createMaterialBottomTabNavigator(); 
 
@@ -38,7 +38,7 @@ export class Main extends Component {
                         ), tabBarLabelPosition: 'below-icon'
                     }}
                 />
-                <Tab.Screen name="Userlist" component={UserlistScreen} 
+                <Tab.Screen name="Userlist" component={SocialScreen} 
                     options= {{
                         tabBarIcon: ({color, size}) => (
                             <MaterialCommunityIcons name="account-multiple" color={color} size={26}/>
