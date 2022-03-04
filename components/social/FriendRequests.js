@@ -29,7 +29,7 @@ function FriendRequests() {
 
     return (
         <React.Fragment>
-            {friendRequests == null &&
+            {friendRequests === null &&
                 <Text>You have no friend requests :(</Text>
             }
             {friendRequests != null &&
