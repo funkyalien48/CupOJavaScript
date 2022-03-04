@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text } from 'react-native'
+import { Text, View, FlatList } from 'react-native'
 import fire from '../fire'
 
 function FriendRequests() {
@@ -12,9 +12,11 @@ function FriendRequests() {
     const getFriendRequests = () => {
         usersDB.doc(userID).collection('friendRequests').get()
             .then((querySnapshot) => {
-                let friendRequests = querySnapshot.docs.map(doc => doc.data());
-                setFriendRequests(friendRequests);
-                setFriendRequestRetrieved(true);
+                setFriendRequestRetrieved(true); 
+                let frs = querySnapshot.docs.map(doc => doc.data());
+                if(frs.length > 0) {
+                    setFriendRequests(frs);
+                }
             })
             .catch((error) => {
                 console.log('Error getting friend requests: ', error);
@@ -27,11 +29,17 @@ function FriendRequests() {
 
     return (
         <React.Fragment>
-            {friendRequests === null &&
+            {friendRequests == null &&
                 <Text>You have no friend requests :(</Text>
             }
             {friendRequests != null &&
-                <Text>You have friend requests!</Text>
+                <FlatList
+                    keyExtractor={(item) => item.userID}
+                    data={friendRequests}
+                    renderItem={({ item }) => (
+                        <Text>{item.first_name + " " + item.last_name + " wants to send you a friend request"}</Text>
+                    )}
+                />
             }
         </React.Fragment>
     )
