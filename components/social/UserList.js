@@ -14,9 +14,23 @@ export default function UserList() {
 
     const [isFriend, setIsFriend] = useState(false);
     const currentUserID = fire.auth().currentUser.uid;
+    const [currentUser, setCurrentUser] = useState(null);
 
     const [startIndex, setStartIndex] = useState(5);
     const [endIndex, setEndIndex] = useState(10);
+
+    function getCurrentUser() {
+        usersDB.where('id', '==', currentUserID).get()
+            .then((querySnapshot) => {
+                let userData = querySnapshot.docs.map(doc => doc.data());
+                setCurrentUser(userData[0]);
+            })
+            .catch((error) => console.log('Error getting current user: ', error));
+    }
+
+    if(currentUser == null) {
+        getCurrentUser();
+    }
 
     //Get user information from firestore
     const getUsers = () => {
@@ -79,9 +93,8 @@ export default function UserList() {
                     alert("Friend request already pending.");
                 }
                 else {
-                    usersDB.doc(user2.id).collection("friendRequests").add({userID: currentUserID});
+                    usersDB.doc(user2.id).collection("friendRequests").add({userID: currentUser.id, first_name: currentUser.first_name, last_name: currentUser.last_name, profilePicId: currentUser.profilePicId});
                     alert("Friend request sent!");
-                    checkForAcceptFriendRequest(user2.id);
                 }
         }).catch(function(error) {console.log('Error getting documents: ', error)})
     }
