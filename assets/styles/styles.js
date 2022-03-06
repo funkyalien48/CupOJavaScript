@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 16,
         fontFamily: 'Montserrat-SemiBold',
-        margin: 'auto',
+        marginLeft: '35%',
         marginTop: '5%'
     },
     LoginButton: {
