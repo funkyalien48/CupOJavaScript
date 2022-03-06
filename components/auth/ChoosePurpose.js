@@ -87,7 +87,7 @@ export default class CreateProfile extends Component {
             <View style = {styles.contentCenter}>
                 <View style={{width: '18%', height: 60}}>
                     <Pressable onPress={() => this.props.navigation.navigate("CreateProfile")} 
-                        style={{marginTop: 50, marginLeft: -165, flexDirection: 'row'}}>
+                        style={{marginTop: 15, marginLeft: -245, flexDirection: 'row'}}>
                         <Image source={backButton} style={{width: 20, height: 20}} />
                         <Text style={{marginTop: 0, color: 'white'}}>Go back</Text>
                     </Pressable>
