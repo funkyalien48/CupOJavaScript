@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'Montserrat-SemiBold',
         marginLeft: '35%',
-        marginTop: '32%'
+        marginTop: '5%'
     },
     LoginButton: {
         color: '#FFF',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     AuthTextInputText: {
         marginLeft: '8%',
         fontSize: 14,
-        marginTop: '3%',
+        // marginTop: '3%',
         fontFamily: 'Montserrat-SemiBold',
         color: '#12121F'
     },
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         marginLeft: '8%',
         marginTop: Platform.OS === "ios"? "3%" : 0,
         fontFamily: 'Montserrat-Regular',
-        fontSize: 15
+        fontSize: 25
     },
     AuthTextInputContainerSmall: {
         backgroundColor: '#FFF',
