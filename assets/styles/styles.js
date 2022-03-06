@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     footerText: {
         flexDirection: 'row', 
         justifyContent: 'flex-end',
-        marginRight: 37,
+        marginRight: 37
     },
     textBold: {
         color: '#FFF',
@@ -152,6 +152,11 @@ const styles = StyleSheet.create({
         height: 110,
         borderRadius: 90,
         paddingTop: '5%'
+    },
+    BackButton: {
+        width: '30px',
+        height: '30px',
+        paddingTop: '10%'
     }
 })
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { View, Button, Image, Alert } from 'react-native'
+import { View, Text, Button, Image, Alert, Pressable } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
+import backButton from '../../assets/images/backButton.png'
+
 
 import fire from '../fire'
 
@@ -81,8 +83,15 @@ export default class CreateProfile extends Component {
         const { navigate } = this.props.navigation;
 
         return (
-                
+            
             <View style = {styles.contentCenter}>
+                <View style={{width: '18%', height: 60}}>
+                    <Pressable onPress={() => this.props.navigation.navigate("CreateProfile")} 
+                        style={{marginTop: 50, marginLeft: -165, flexDirection: 'row'}}>
+                        <Image source={backButton} style={{width: 20, height: 20}} />
+                        <Text style={{marginTop: 0, color: 'white'}}>Go back</Text>
+                    </Pressable>
+                </View>           
             <Image style = {styles.loginImage} source = {require("../../assets/icon.png")}/>
                 <View style = {styles.loginPrompt}>      
                     <RNPickerSelect

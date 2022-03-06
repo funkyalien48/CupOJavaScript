@@ -1,12 +1,13 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { Component } from 'react'
-import { View, Text, TextInput, Image, Alert, TouchableOpacity, Platform } from 'react-native'
+import { View, Text, TextInput, Image, Alert, TouchableOpacity, Platform, Pressable } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RNPickerSelect from 'react-native-picker-select';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../assets/colors/colors';
 import styles from '../../assets/styles/styles';
 import AuthTextInput from '../AuthTextInput';
+import backButton from '../../assets/images/backButton.png'
 
 export default class CreateProfile extends Component {
 
@@ -125,6 +126,13 @@ export default class CreateProfile extends Component {
                                 scrollEnabled={false}
                                 // contentContainerStyle={ Platform.OS === "ios" ? styles.ios : {} }
                                 >
+                                <View style={{width: '18%', height: 50}}>
+                                    <Pressable onPress={() => this.props.navigation.navigate("Register")} 
+                                        style={{marginTop: 5, marginLeft: 5, flexDirection: 'row'}}>
+                                        <Image source={backButton} style={{width: 20, height: 20}} />
+                                        <Text style={{marginTop: 0, color: 'white'}}>Go back</Text>
+                                    </Pressable>
+                                </View>
                                 <Text style={{
                                     color: '#FFF',
                                     fontSize: 16,
