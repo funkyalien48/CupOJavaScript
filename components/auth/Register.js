@@ -35,6 +35,10 @@ export default class Register extends Component {
         {
             alert("Your passwords do not match!");
         }
+        else if (password.length < 6)
+        {
+            alert("Password must be more than 6 characters.");
+        }
         else
         {
             this.props.navigation.navigate("CreateProfile", {email: email, password: password});
