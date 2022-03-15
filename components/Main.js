@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -11,6 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FeedScreen from './main/Feed'
 import ProfileScreen from './main/Profile'
 import SocialScreen from './main/Social'
+import ProgressScreen from './main/Progress'
 
 const Tab = createMaterialBottomTabNavigator(); 
 
@@ -38,7 +38,7 @@ export class Main extends Component {
                         ), tabBarLabelPosition: 'below-icon'
                     }}
                 />
-                <Tab.Screen name="Userlist" component={SocialScreen} 
+                <Tab.Screen name="Social" component={SocialScreen} 
                     options= {{
                         tabBarIcon: ({color, size}) => (
                             <MaterialCommunityIcons name="account-multiple" color={color} size={26}/>
@@ -55,6 +55,13 @@ export class Main extends Component {
                     options= {{
                         tabBarIcon: ({color, size}) => (
                             <MaterialCommunityIcons name="camera" color={color} size={26}/>
+                        ), tabBarLabelPosition: 'below-icon'
+                    }}
+                />
+                <Tab.Screen name="Progress" component={ProgressScreen} 
+                    options= {{
+                        tabBarIcon: ({color, size}) => (
+                            <MaterialCommunityIcons name="equalizer" color={color} size={26}/>
                         ), tabBarLabelPosition: 'below-icon'
                     }}
                 />
