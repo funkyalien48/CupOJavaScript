@@ -54,23 +54,25 @@ const styles = {
         alignItems: 'center'
     },
     innerScreen: {
-        height: '95%',
+        height: '100%',
         width: '100%',
-        backgroundColor: "#FFFFFF",
-        borderRadius: 0
+        backgroundColor: "#FFFFFF"
     },
     topNav: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        padding: '5px'
+        padding: 5
     },
     navLink: {
         backgroundColor: '#ccc',
-        borderRadius: '5px',
-        paddingTop: '10px',
-        paddingBottom: '10px',
+        borderRadius: 5,
+        paddingTop: 10,
+        paddingBottom: 10,
         width: '49.5%',
-        textAlign: 'center'
+        height: 37,
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 }

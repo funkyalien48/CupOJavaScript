@@ -8,7 +8,7 @@ const profileStyles = StyleSheet.create({
     },
     innerScreen:
     {
-        height: '93%',
+        height: '100%',
         width: '100%',
         backgroundColor: "#FFFFFF",
         marginTop: '12%',
