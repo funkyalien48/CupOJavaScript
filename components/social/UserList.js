@@ -127,11 +127,12 @@ export default function UserList() {
                             <TouchableOpacity onPress={() => {togglePopup(null); setIsFriend(false);}}>
                                 <Text style={styles.xbutton}>X</Text>
                             </TouchableOpacity>
-                            <Text>{popupItem.first_name}</Text>
-                            <Text>{popupItem.sex}</Text>
-                            <Text>{popupItem.feet}</Text>
-                            <Text>{popupItem.weight}</Text>
-                            <Text>{popupItem.bmi}</Text>
+                            <Text>{"First Name: " + popupItem.first_name}</Text>
+                            <Text>{"Sex: " + popupItem.sex}</Text>
+                            <Text>{"Feet: " + popupItem.feet}</Text>
+                            <Text>{"Inches: " + popupItem.inches}</Text>
+                            <Text>{"Weight: " + popupItem.weight}</Text>
+                            <Text>{"BMI: " + popupItem.bmi}</Text>
                             {isFriend == false && popupItem.id != currentUserID &&
                                 <TouchableOpacity onPress={() => sendFriendRequest(popupItem)}>
                                     <Text>Send Friend Request</Text>
