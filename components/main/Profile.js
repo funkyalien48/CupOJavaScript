@@ -26,6 +26,7 @@ export default function Profile()
     const [feet, setFeet] = useState("");
     const [inches, setInches] = useState("");
     const [bmi, setBmi] = useState("");
+    const [hobbies, setHobbies] = useState("");
     const [profilePic, setProfilePic] = useState(undefined);
     const [userDataIsRetrieved, setUserDataIsRetrieved] = useState(false);
     const [purpose, setPurpose] = useState("");
@@ -37,6 +38,7 @@ export default function Profile()
     let newWeight = weight;
     let newFeet = feet;
     let newInches = inches;
+    let newHobbies = hobbies;
 
     function validateProfileEdits()
     {
@@ -70,6 +72,20 @@ export default function Profile()
                 isError = true;
             }
 
+              //Check if weight is valid
+              if (newWeight == '' || isNaN(newWeight) || newWeight < 0 || newWeight > 1500)
+              {
+                  errorMsg += '\nWeight';
+                  isError = true;
+              }
+
+      //Check if hobbies section is empty
+      if (newHobbies == '')
+      {
+          errorMsg += '\nHobbies';
+          isError = true;
+      }
+
             //If an error was detected.
             if (isError == true)
             {
@@ -93,6 +109,7 @@ export default function Profile()
             feet: newFeet,
             inches: newInches,
             weight: newWeight,
+            hobbies: newHobbies,
             bmi: calcBMI()
             })
 
@@ -118,6 +135,7 @@ export default function Profile()
             setFeet(snapshot.data().feet)
             setInches(snapshot.data().inches)
             setBmi(snapshot.data().bmi)
+            setHobbies(snapshot.data().hobbies)
             setProfilePic(snapshot.data().profilePicId)
             setPurpose(snapshot.data().purpose)
         }))
@@ -139,6 +157,7 @@ export default function Profile()
                     <Text style = {profileStyles.pageHeader}>Profile</Text>
                     <Image source={{ uri: profilePic }} style={profileStyles.profilePicture}/>
                 </View>
+
                 <View style = {profileStyles.profileRow}>
                 <Text style = {profileStyles.profileData}>Name  </Text><TextInput 
                     style = {profileStyles.profileInput}
@@ -154,6 +173,7 @@ export default function Profile()
                 />
                 </View>
 
+
                 <View style = {profileStyles.profileRow}>
                 <Text style = {profileStyles.profileData}>Age  </Text><TextInput 
                     style = {profileStyles.profileInput}
@@ -162,6 +182,7 @@ export default function Profile()
                     onChangeText = {editedAge => newAge = editedAge}
                 />
                 </View>
+
 
                 <View style = {profileStyles.profileRow}>
                 <Text style = {profileStyles.profileData}>Height  </Text><TextInput 
@@ -180,6 +201,7 @@ export default function Profile()
                 <Text style = {{fontSize: 17, fontFamily: 'Montserrat-SemiBold', color: "#000000",}}>"</Text>
                 </View>
 
+
                 <View style = {profileStyles.profileRow}>
                 <Text style = {profileStyles.profileData}>Weight  </Text><TextInput 
                     style = {profileStyles.weightInput}
@@ -189,13 +211,27 @@ export default function Profile()
                 />
                 <Text style = {profileStyles.profileInput}> lbs</Text>
                 </View>
+
+
                 <View style = {profileStyles.profileRow}>
                 <Text style = {profileStyles.profileData}>BMI </Text><Text style = {profileStyles.profileInput}>{bmi.toString()}</Text>
                 <Text>{`\n\n`}</Text>
                 </View>
+
+
                 <View style = {{flexDirection: 'row', marginLeft: 50, marginBottom: 25}}>
                 <Text style = {profileStyles.profileData}>{"I want to " + purpose.toString() + " weight!"} </Text>
                 </View>
+
+                <View style = {profileStyles.profileRow}>
+                <Text style = {profileStyles.profileData}>Hobbies  </Text><TextInput 
+                    style = {profileStyles.profileInput}
+                    placeholder = { age.toString() }
+                    returnKeyType = 'done'
+                    onChangeText = {editedHobbies => newHobbies = editedHobbies}
+                />
+                </View>
+
 
                 <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
                 <Button

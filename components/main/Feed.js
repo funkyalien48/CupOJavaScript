@@ -60,6 +60,7 @@ export default function Feed() {
                 setInches(snapshot.data().inches);
                 setAge(snapshot.data().age);
                 setPurpose(snapshot.data().purpose);
+                setHobbies(snapshot.data().hobbies);
 
                 calculateCalories();
             }))
@@ -172,9 +173,9 @@ export default function Feed() {
             <StatusBar barStyle='light-content' />
             <Text style={styles.pageHeader}>Feed</Text>
             <View style = {styles.feedScreen}>
-
+            <View style={{ alignItems: 'center' }}>
                 <View style = {styles.feedRow}>
-                    <Text style = {styles.feedData}>Your purpose is to {purpose} weight</Text>
+                    <Text style = {styles.feedData}>Are you ready to {purpose} weight !? Here, you can track your daily calories to help you reach your goals. </Text>
                 </View>
 
                 <View style = {styles.feedRow}>
@@ -205,17 +206,20 @@ export default function Feed() {
                         placeholder = "Cals"
                         returnKeyType = 'done'
                         onChangeText = {editedFoodCalories => newFoodCalories = editedFoodCalories}
+                      //  onSubmit= {startIndex}
                     />
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
                 <Button
                         title = 'Add Food'
-                        onPress = {() => validateFoodInputs(newFoodName, newFoodCalories)}
+                        onPress = {() => validateFoodInputs(newFoodName, newFoodCalories) && startIndex}
                     />
-                    <Button
+                    {/* <Button
                     title = 'Refresh'
                     onPress = {() => getUserInfo()}
-                />
+                /> */}
+                     
+
                 </View>
                 <FlatList
                     data={dailyFood}
@@ -233,6 +237,7 @@ export default function Feed() {
                     keyExtractor = {(item, index) => index.toString()}
                     />
                     
+            </View>
             </View>
         </SafeAreaView>
         </LinearGradient>
