@@ -23,6 +23,7 @@ const SignUp =(props)=>{
         setFeet,
         setInches,
         setWeight,
+        setHobbies,
     } = props;
 
     return (
@@ -138,8 +139,18 @@ const SignUp =(props)=>{
             placeholderTextColor="#BDBDBD"
             onChangeText={setWeight}
 
+            />
+                 </View>
+
+<View style={styles.inputView}>
+            <TextInput
+            placeholder="Hobbies"
+            autoCapitalize="none"
+            placeholderTextColor="#BDBDBD"
+            onChangeText={setHobbies}
 
             />
+
         </View>
 
         <TouchableOpacity onPress = {handleSignup}><Text style={styles.registrationStyle}>Sign Up</Text></TouchableOpacity>
@@ -148,6 +159,7 @@ const SignUp =(props)=>{
 
       </View>
     );
-}
-
+    }
 export default SignUp;
+
+   

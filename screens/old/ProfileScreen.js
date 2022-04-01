@@ -15,6 +15,7 @@ export default function ProfileScreen() {
     const [weight, setWeight] = useState(-1);
     const [feet, setFeet] = useState(-1);
     const [inches, setInches] = useState(-1);
+    const [hobbies, setHobbies] = useState("");
 
     function userPull() {
         fire.database().ref('users/' + fire.auth().currentUser.email.replace('.',',') + "/firstName").on('value',(snapshot => {
@@ -57,6 +58,11 @@ export default function ProfileScreen() {
             const data = snapshot.val();
             setInches(data);
         }))
+
+        fire.database().ref('hobbies/' + fire.auth().currentUser.email.replace('.',',') + "/hobbies").on('value',(snapshot => {
+            const data = snapshot.val();
+            setHobbies(data);
+        }))
     }
 
     useEffect(userPull);
@@ -80,6 +86,7 @@ export default function ProfileScreen() {
                 Weight:{weight}{"\n"}
                 Height:{feet}'{inches}"{"\n"}
                 BMI:{BMI} {"\n"}
+                Hobbies:{hobbies} {"\n"}
                 {/*Base Calorie Expense:{BMR}*/}
             </Text>
 

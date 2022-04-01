@@ -133,6 +133,7 @@ export default function UserList() {
                             <Text>{"Inches: " + popupItem.inches}</Text>
                             <Text>{"Weight: " + popupItem.weight}</Text>
                             <Text>{"BMI: " + popupItem.bmi}</Text>
+                            <Text>{"Interests: " + popupItem.hobbies}</Text>
                             {isFriend == false && popupItem.id != currentUserID &&
                                 <TouchableOpacity onPress={() => sendFriendRequest(popupItem)}>
                                     <Text>Send Friend Request</Text>
