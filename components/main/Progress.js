@@ -1,22 +1,81 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { Text, View } from 'react-native'
+import { Text, View, Pressable, Modal, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import colors from '../../assets/colors/colors'
+import fire from '../fire'
 
 function Progress() {
-  return (
-      <LinearGradient colors={[colors.lightBlue, colors.darkBlue]} style={styles.outerScreen}>
+    const usersDB = fire.firestore().collection('users')
+    const userID = fire.auth().currentUser.uid
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [weight, setWeight] = useState("");
+
+    let today = new Date();
+    let logDate = today.toDateString(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate());
+
+    function logWeight() {
+        const loggedWeight = {
+            weight: weight,
+            date: logDate
+        }
+
+        usersDB.doc(userID).collection("LoggedWeight").add(loggedWeight)
+        .then((result) => {
+            console.log(result)
+        })
+        .catch((error) => {
+            console.log(error)
+            Alert.alert('Error', error.message, [{text: 'OK'},], {cancelable: true});
+        });
+
+        setModalVisible(!modalVisible)
+    }
+
+    return (
+        <LinearGradient colors={[colors.lightBlue, colors.darkBlue]} style={styles.outerScreen}>
         <SafeAreaView style = {styles.contentCenter}>
             <StatusBar barStyle='light-content' />
             <Text style={styles.pageHeader}>Progress</Text>
             <View style={styles.innerScreen}>
-                <Text>Progress Graph Goes here</Text>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>Weight</Text>
+                            <TextInput 
+                                style = {styles.nameInput}
+                                placeholder = "Weight"
+                                returnKeyType = 'done'
+                                onChangeText = {editedWeight => setWeight(editedWeight)}
+                            />
+                            <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={logWeight}
+                            >
+                                <Text style={styles.textStyle}>Log Weight</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </Modal>
+                <View style={styles.logWeightSection}>
+                    <Pressable style={styles.logWeightBtn} title="Users List" onPress={() => setModalVisible(true)}>
+                        <Text style={styles.logWeightText}>Log Weight</Text>
+                    </Pressable>
+                </View>
             </View>
         </SafeAreaView>
-      </LinearGradient>
-  )
+        </LinearGradient>
+    )
 }
 
 const styles = {
@@ -71,8 +130,66 @@ const styles = {
         fontSize: 20,
         color: '#000',
         fontFamily: 'NunitoSans-Regular',
-    }
-
+    },
+    logWeightSection: {
+        width: '100%',
+        height: '50px',
+        flexDirection: 'row',
+        justifyContent: 'end',
+        alignItems: 'center',
+        padding: 10
+    },
+    logWeightBtn: {
+        backgroundColor: '#1255FFD9',
+        padding: 10,
+        borderRadius: 5
+    },
+    logWeightText: {
+        color: 'white'
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+      modalView: {
+        display: 'absolute',
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 5,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      button: {
+        borderRadius: 5,
+        padding: 10,
+        elevation: 2
+      },
+      buttonOpen: {
+        backgroundColor: "#F194FF",
+      },
+      buttonClose: {
+        backgroundColor: "#1255FFD9",
+        marginTop: 20
+      },
+      textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+      }
 }
 
 
