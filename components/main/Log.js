@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import colors from '../../assets/colors/colors'
 
-export default function Feed() {
+export default function Log() {
 
     // Set today's date to track calories for today
     let today = new Date();
@@ -24,6 +24,7 @@ export default function Feed() {
     const [purpose, setPurpose] = useState("");
     const [dailyFood, setDailyFood] = useState(null);
     const [splitDailyFood, setSplitDailyFood] = useState(null);
+    const [hobbies, setHobbies] = useState("");
     let totalHeight = ((feet * 12) + Number(inches));
 
     const [recommendedCalories, setRecommendedCalories] = useState("");
@@ -38,7 +39,7 @@ export default function Feed() {
     let newFoodCalories = "";
     
 
-    function updateFeed() {
+    function updateLog() {
         usersDB.doc(userID).collection("DailyFood").add(newDailyFood)
         .then((result) => {
             console.log(result)
@@ -110,7 +111,7 @@ export default function Feed() {
         newDailyFood = {name: name, calories: calories, createdAt: timestamp};
         // let id = Object.keys(newDailyFood).length + 1;
         // newDailyFood[id] = {name: name, calories: calories};
-        updateFeed();
+        updateLog();
         alert("You added: " + name);
 
         changeDailyCalories();
@@ -171,30 +172,30 @@ export default function Feed() {
         <LinearGradient colors={[colors.lightBlue, colors.darkBlue]} style={styles.outerScreen}>
         <SafeAreaView style = {styles.contentCenter}>
             <StatusBar barStyle='light-content' />
-            <Text style={styles.pageHeader}>Feed</Text>
-            <View style = {styles.feedScreen}>
+            <Text style={styles.pageHeader}>Log</Text>
+            <View style = {styles.logScreen}>
             <View style={{ alignItems: 'center' }}>
-                <View style = {styles.feedRow}>
-                    <Text style = {styles.feedData}>Are you ready to {purpose} weight !? Here, you can track your daily calories to help you reach your goals. </Text>
+                <View style = {styles.logRow}>
+                    <Text style = {styles.logData}>Are you ready to {purpose} weight !? Here, you can track your daily calories to help you reach your goals. </Text>
                 </View>
 
-                <View style = {styles.feedRow}>
-                    <Text style = {styles.feedData}>Date: {logDate.toString()}</Text>
+                <View style = {styles.logRow}>
+                    <Text style = {styles.logData}>Date: {logDate.toString()}</Text>
                 </View>
 
-                <View style = {styles.feedRow}>
-                    <Text style = {styles.feedData}>Daily Calories to maintain weight: {Math.round(recommendedCalories)} Cal</Text>
+                <View style = {styles.logRow}>
+                    <Text style = {styles.logData}>Daily Calories to maintain weight: {Math.round(recommendedCalories)} Cal</Text>
                 </View>
 
-                <View style = {styles.feedRow}>
-                    <Text style = {styles.feedData}>Daily Calories to {purpose} 1 lb: {Math.round(purposeCalories)} Cal</Text>
+                <View style = {styles.logRow}>
+                    <Text style = {styles.logData}>Daily Calories to {purpose} 1 lb: {Math.round(purposeCalories)} Cal</Text>
                 </View>
 
-                <View style = {styles.feedRow}>
-                    <Text style = {styles.feedData}>Current Daily Calories: {dailyCalories} Cal</Text>
+                <View style = {styles.logRow}>
+                    <Text style = {styles.logData}>Current Daily Calories: {dailyCalories} Cal</Text>
                 </View>
 
-                <View style = {styles.feedRow}>
+                <View style = {styles.logRow}>
                     <TextInput 
                         style = {styles.nameInput}
                         placeholder = "Name of food"
@@ -249,15 +250,15 @@ const styles = {
         height: '100%',
         alignItems: 'center'
     },
-    feedScreen: {
+    logScreen: {
         height: '100%',
         width: '100%',
         backgroundColor: "#FFFFFF"
     },
-    feedData: {
+    logData: {
         fontSize: 20,
     },
-    feedRow: {
+    logRow: {
         flexDirection: 'row',
     },
     calorieInput: {

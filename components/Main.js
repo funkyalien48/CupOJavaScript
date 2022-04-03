@@ -7,7 +7,7 @@ import { fetchUser } from '../redux/actions/index'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import FeedScreen from './main/Feed'
+import LogScreen from './main/Log'
 import ProfileScreen from './main/Profile'
 import SocialScreen from './main/Social'
 import ProgressScreen from './main/Progress'
@@ -24,17 +24,17 @@ export class Main extends Component {
     }
     render() {
         return (
-            <Tab.Navigator initialRouteName="Feed" labeled={false}>
-                <Tab.Screen name="Feed" component={FeedScreen} 
+            <Tab.Navigator initialRouteName="Log" labeled={false}>
+                <Tab.Screen name="Log" component={LogScreen} 
                 listeners={({ navigation }) => ({
                     tabPress: event => {
                         event.preventDefault();
-                        navigation.navigate("Feed", { userDataIsRetrieved: false})
+                        navigation.navigate("Log", { userDataIsRetrieved: false})
                     }
                 })}
                     options= {{
                         tabBarIcon: ({color, size}) => (
-                            <MaterialCommunityIcons name="pizza" color={color} size={26}/>
+                            <MaterialCommunityIcons name="notebook" color={color} size={26}/>
                         ), tabBarLabelPosition: 'below-icon'
                     }}
                 />
