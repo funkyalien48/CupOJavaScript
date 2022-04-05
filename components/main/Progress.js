@@ -5,14 +5,13 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import colors from '../../assets/colors/colors'
 import fire from '../fire'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 function Progress() {
     const usersDB = fire.firestore().collection('users')
     const userID = fire.auth().currentUser.uid
-
     const [modalVisible, setModalVisible] = useState(false);
     const [weight, setWeight] = useState("");
-
     let today = new Date();
     let logDate = today.toDateString(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate());
 
@@ -39,15 +38,14 @@ function Progress() {
         <SafeAreaView style = {styles.contentCenter}>
             <StatusBar barStyle='light-content' />
             <Text style={styles.pageHeader}>Progress</Text>
+            <Pressable style={styles.addButton} title="Users List" onPress={() => setModalVisible((modalVisible) => !modalVisible)}>
+                <MaterialCommunityIcons name="plus" color={'#fff'} size={26} />
+            </Pressable>
             <View style={styles.innerScreen}>
                 <Modal
                     animationType="slide"
                     transparent={true}
                     visible={modalVisible}
-                    onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
-                    setModalVisible(!modalVisible);
-                    }}
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
@@ -68,9 +66,9 @@ function Progress() {
                     </View>
                 </Modal>
                 <View style={styles.logWeightSection}>
-                    <Pressable style={styles.logWeightBtn} title="Users List" onPress={() => setModalVisible(true)}>
+                    {/* <Pressable style={styles.logWeightBtn} title="Users List" onPress={() => setModalVisible(true)}>
                         <Text style={styles.logWeightText}>Log Weight</Text>
-                    </Pressable>
+                    </Pressable> */}
                 </View>
             </View>
         </SafeAreaView>
@@ -152,8 +150,8 @@ const styles = {
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22
-      },
-      modalView: {
+    },
+    modalView: {
         display: 'absolute',
         margin: 20,
         backgroundColor: "white",
@@ -162,34 +160,39 @@ const styles = {
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
-      },
-      button: {
+    },
+    button: {
         borderRadius: 5,
         padding: 10,
         elevation: 2
-      },
-      buttonOpen: {
+    },
+    buttonOpen: {
         backgroundColor: "#F194FF",
-      },
-      buttonClose: {
+    },
+    buttonClose: {
         backgroundColor: "#1255FFD9",
         marginTop: 20
-      },
-      textStyle: {
+    },
+    textStyle: {
         color: "white",
         fontWeight: "bold",
         textAlign: "center"
-      },
-      modalText: {
+    },
+    modalText: {
         marginBottom: 15,
         textAlign: "center"
-      }
+    },
+    addButton: {
+        position: 'absolute',
+        top: 7,
+        right: 15
+    }
 }
 
 
