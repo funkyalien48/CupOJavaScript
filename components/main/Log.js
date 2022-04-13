@@ -6,6 +6,7 @@ import { Text, View, Button, TextInput, Image, FlatList, TouchableOpacity, useEf
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import colors from '../../assets/colors/colors'
+import { getMediaLibraryPermissionsAsync } from 'expo-image-picker'
 
 export default function Log() {
 
@@ -172,73 +173,82 @@ export default function Log() {
         <LinearGradient colors={[colors.lightBlue, colors.darkBlue]} style={styles.outerScreen}>
         <SafeAreaView style = {styles.contentCenter}>
             <StatusBar barStyle='light-content' />
-            <Text style={styles.pageHeader}>Log</Text>
+            <Text style = {styles.pageHeader}>Log</Text>
             <View style = {styles.logScreen}>
-            <View style={{ alignItems: 'center' }}>
-                <View style = {styles.logRow}>
-                    <Text style = {styles.logData}>Are you ready to {purpose} weight !? Here, you can track your daily calories to help you reach your goals. </Text>
-                </View>
+                <View style = {{ alignItems: 'center' }}>
 
-                <View style = {styles.logRow}>
-                    <Text style = {styles.logData}>Date: {logDate.toString()}</Text>
-                </View>
+                    <View style = {styles.logRow}>
+                        <Text style = {styles.logData}>Date: {logDate.toString()}</Text>
+                    </View>
 
-                <View style = {styles.logRow}>
-                    <Text style = {styles.logData}>Daily Calories to maintain weight: {Math.round(recommendedCalories)} Cal</Text>
-                </View>
+                    <View style = {styles.logPurpose}>
+                        <Text style = {styles.logData}>Your purpose is to {purpose} weight! </Text>
+                    </View>
 
-                <View style = {styles.logRow}>
-                    <Text style = {styles.logData}>Daily Calories to {purpose} 1 lb: {Math.round(purposeCalories)} Cal</Text>
-                </View>
+                    <View style = {{flex: 1, flexDirection:"row", justifyContent:'center', alignItems: 'center', width: '100%', height: '10%',
+                                    borderTopLeftRadius: 20, borderTopRightRadius: 20, borderBottomRightRadius: 20,
+                                    borderBottomLeftRadius: 20, backgroundColor: "#FFFFFF", padding: 10, marginBottom: 30}}>
+                        <Text style = {styles.logData}>Daily Calories to maintain weight: {Math.round(recommendedCalories)} Cal</Text>
+                    </View> 
 
-                <View style = {styles.logRow}>
-                    <Text style = {styles.logData}>Current Daily Calories: {dailyCalories} Cal</Text>
-                </View>
+                    <View style = {{flex: 1, flexDirection:"row", justifyContent:'center', alignItems: 'center', width: '100%', height: '10%',
+                                    borderTopLeftRadius: 20, borderTopRightRadius: 20, borderBottomRightRadius: 20,
+                                    borderBottomLeftRadius: 20, backgroundColor: "#FFFFFF", padding: 10, marginBottom: 30}}>
+                        <Text style = {styles.logData}>Daily Calories to {purpose} 1 lb: {Math.round(purposeCalories)} Cal</Text>
+                    </View>
 
-                <View style = {styles.logRow}>
-                    <TextInput 
-                        style = {styles.nameInput}
-                        placeholder = "Name of food"
-                        returnKeyType = 'done'
-                        onChangeText = {editedFoodName => newFoodName = editedFoodName}
-                    />
-                    <TextInput 
-                        style = {styles.calorieInput}
-                        placeholder = "Cals"
-                        returnKeyType = 'done'
-                        onChangeText = {editedFoodCalories => newFoodCalories = editedFoodCalories}
-                      //  onSubmit= {startIndex}
-                    />
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
-                <Button
-                        title = 'Add Food'
-                        onPress = {() => validateFoodInputs(newFoodName, newFoodCalories) && startIndex}
-                    />
-                    {/* <Button
-                    title = 'Refresh'
-                    onPress = {() => getUserInfo()}
-                /> */}
-                     
+                    <View style = {{flex: 1, flexDirection:"row", justifyContent:'center', alignItems: 'center', width: '100%', height: '10%',
+                                    borderTopLeftRadius: 20, borderTopRightRadius: 20, borderBottomRightRadius: 20,
+                                    borderBottomLeftRadius: 20, backgroundColor: "#FFFFFF", padding: 10, marginBottom: 30}}>
+                        <Text style = {styles.logData}>Current Daily Calories: {dailyCalories} Cal</Text>
+                    </View>
 
-                </View>
-                <FlatList
-                    data={dailyFood}
-                    renderItem={({item}) => 
-                        <View style = {styles.foodData}>
-                            {item.createdAt === logDate &&
-                                <View style={{ flex: 1, flexDirection: 'row'}}>
-                                <Text style= {styles.foodName}>{item.name}{" "}</Text>
-                                <Text style= {styles.foodCalories}>{item.calories}</Text>
-                            </View>
-                            }
-                        </View>}
-                    onEndReached = {() => continueList(startIndex, endIndex)}
-                    onEndReachedThreshold = {1}
-                    keyExtractor = {(item, index) => index.toString()}
-                    />
+                    <View style = {{flex: 1, flexDirection:"row", justifyContent:'center', alignItems: 'center', width: '100%', height: '10%',
+                                    borderTopLeftRadius: 20, borderTopRightRadius: 20, borderBottomRightRadius: 20,
+                                    borderBottomLeftRadius: 20, backgroundColor: "#FFFFFF", padding: 10, marginBottom: 30}}>
+                        <TextInput 
+                            style = {styles.nameInput}
+                            placeholder = "Name of food"
+                            returnKeyType = 'done'
+                            onChangeText = {editedFoodName => newFoodName = editedFoodName}
+                        />
+                        <TextInput 
+                            style = {styles.calorieInput}
+                            placeholder = "Cals"
+                            returnKeyType = 'done'
+                            onChangeText = {editedFoodCalories => newFoodCalories = editedFoodCalories}
+                        //  onSubmit= {startIndex}
+                        />
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
+                    <Button
+                            title = 'Add Food'
+                            onPress = {() => validateFoodInputs(newFoodName, newFoodCalories) && startIndex}
+                        />
+                        {/* <Button
+                        title = 'Refresh'
+                        onPress = {() => getUserInfo()}
+                    /> */}
+                        
+
+                    </View>
+                    <FlatList
+                        data={dailyFood}
+                        renderItem={({item}) => 
+                            <View style = {styles.foodData}>
+                                {item.createdAt === logDate &&
+                                    <View style={{ flex: 1, flexDirection: 'row'}}>
+                                    <Text style= {styles.foodName}>{item.name}{" "}</Text>
+                                    <Text style= {styles.foodCalories}>{item.calories}</Text>
+                                </View>
+                                }
+                            </View>}
+                        onEndReached = {() => continueList(startIndex, endIndex)}
+                        onEndReachedThreshold = {1}
+                        keyExtractor = {(item, index) => index.toString()}
+                        />
                     
-            </View>
+                </View>
             </View>
         </SafeAreaView>
         </LinearGradient>
@@ -249,17 +259,44 @@ const styles = {
     contentCenter: {
         height: '100%',
         alignItems: 'center'
+        
     },
     logScreen: {
         height: '100%',
         width: '100%',
-        backgroundColor: "#FFFFFF"
+        backgroundColor: '#D9D7D7',
     },
     logData: {
         fontSize: 20,
     },
+
+    // logSpace: {
+    //     flexDirection: 'row',
+    //     width: '100%',
+    //     backgroundColor: '#D9D7D7',
+    //     padding: 10
+    // },
+
+    logPurpose: {
+        flexDirection: 'row',
+        width: '100%',
+        backgroundColor: '#D9D7D7',
+        justifyContent: 'center',
+        fontWeight: 'bold',
+        padding: 10
+    },
+
     logRow: {
         flexDirection: 'row',
+        width: '100%',
+        height: '10%',
+        backgroundColor: "#FFFFFF",
+        justifyContent: 'center',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20, 
+        borderBottomRightRadius: 20,
+        borderBottomLeftRadius: 20,
+        padding: 10,
     },
     calorieInput: {
         fontSize: 20,
@@ -274,12 +311,12 @@ const styles = {
         left: 0,
         right: 0,
         top: 0,
-        height: '100%'
+        height: '100%'       
     },
     pageHeader: {
         fontSize: 30,
         fontFamily: 'NunitoSans-Bold',
-        color: '#000000'
+        color: '#000000',
     },
     foodData: {
     },

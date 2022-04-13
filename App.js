@@ -103,7 +103,7 @@ export default class App extends Component {
     // if not logged in display navigation container
     if(!loggedIn) {
     return (
-      <NavigationContainer>
+    <NavigationContainer>
       <Stack.Navigator initialRouteName="Register">
         <Stack.Screen name="Register" component={RegisterScreen} navigation={this.props.navigation} options={{  headerShown: false, animationEnabled: false }}/>
         <Stack.Screen name="Login" component={LoginScreen} navigation={this.props.navigation} options={{  headerShown: false, animationEnabled: false }}/>
