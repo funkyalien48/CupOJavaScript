@@ -11,7 +11,7 @@ function Progress() {
     const usersDB = fire.firestore().collection('users')
     const userID = fire.auth().currentUser.uid
     const [modalVisible, setModalVisible] = useState(false);
-    const [weight, setWeight] = useState("");
+    const [weight, setWeight] = useState('');
     let today = new Date();
     let logDate = today.toDateString(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate());
 
@@ -43,32 +43,39 @@ function Progress() {
             </Pressable>
             <View style={styles.innerScreen}>
                 <Modal
-                    animationType="slide"
+                    animationType="fade"
                     transparent={true}
                     visible={modalVisible}
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Weight</Text>
+                            <Text style={styles.modalText}>Log Weight</Text>
+                            <View style={styles.bar}></View>
+                            <Text style={styles.inputHeader}>Enter Weight</Text>
                             <TextInput 
-                                style = {styles.nameInput}
+                                style = {styles.weightInput}
                                 placeholder = "Weight"
                                 returnKeyType = 'done'
                                 onChangeText = {editedWeight => setWeight(editedWeight)}
                             />
-                            <Pressable
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={logWeight}
-                            >
-                                <Text style={styles.textStyle}>Log Weight</Text>
-                            </Pressable>
+                            <View style={styles.buttons}>
+                                <Pressable
+                                    style={[styles.button, styles.cancelButton]}
+                                    onPress={() => setModalVisible(false)}
+                                    >
+                                        <Text style={[styles.textStyle, styles.red]}>Cancel</Text>
+                                </Pressable>
+                                <Pressable
+                                    style={[styles.button, styles.logButton]}
+                                    onPress={logWeight}
+                                    >
+                                        <Text style={[styles.textStyle, styles.green]}>Submit</Text>
+                                </Pressable>
+                            </View>
                         </View>
                     </View>
                 </Modal>
                 <View style={styles.logWeightSection}>
-                    {/* <Pressable style={styles.logWeightBtn} title="Users List" onPress={() => setModalVisible(true)}>
-                        <Text style={styles.logWeightText}>Log Weight</Text>
-                    </Pressable> */}
                 </View>
             </View>
         </SafeAreaView>
@@ -101,9 +108,13 @@ const styles = {
         width: '100%',
         backgroundColor: "#FFFFFF"
     },
-    nameInput: {
+    weightInput: {
+        padding: '10px',
         fontSize: 20,
-        width: 200
+        width: '100%',
+        border: '1px solid #ddd',
+        borderRadius: 5,
+        color: '#000'
     },
     outerScreen:  {
         position: 'absolute',
@@ -149,15 +160,16 @@ const styles = {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        backgroundColor: '#00000030'
     },
     modalView: {
+        width: '90%',
         display: 'absolute',
         margin: 20,
         backgroundColor: "white",
-        borderRadius: 5,
-        padding: 35,
-        alignItems: "center",
+        borderRadius: 20,
+        padding: 30,
+        alignItems: "start",
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -175,23 +187,49 @@ const styles = {
     buttonOpen: {
         backgroundColor: "#F194FF",
     },
-    buttonClose: {
-        backgroundColor: "#1255FFD9",
-        marginTop: 20
+    logButton: {
+        backgroundColor: "#d3f4d8",
+        width: '48%'
+    },
+    cancelButton: {
+        backgroundColor: '#f9dade',
+        width: '48%'
     },
     textStyle: {
-        color: "white",
         fontWeight: "bold",
         textAlign: "center"
     },
     modalText: {
         marginBottom: 15,
-        textAlign: "center"
+        fontSize: '17pt',
+        fontWeight: 'bold'
     },
     addButton: {
         position: 'absolute',
         top: 7,
         right: 15
+    },
+    green: {
+        color: '#228220'
+    },
+    red: {
+        color: '#dc2833'
+    },
+    buttons: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 40
+    },
+    inputHeader: {
+        fontSize: '14pt',
+        marginBottom: 10
+    },
+    bar: {
+        width: '100%',
+        height: '1px',
+        backgroundColor: '#eee',
+        marginBottom: 45,
     }
 }
 
