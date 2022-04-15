@@ -111,6 +111,8 @@ export default function Log() {
         updateLog();
         alert("You added: " + name);
 
+        setFood('');
+        setCalories('');
         changeDailyCalories();
     }
 
