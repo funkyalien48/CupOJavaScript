@@ -101,8 +101,6 @@ export default function Log() {
         //If everything is valid
         else {
             typeNewFood(name, calories);
-            setFood('');
-            setCalories('');
         }
     }
 
@@ -113,8 +111,6 @@ export default function Log() {
         updateLog();
         alert("You added: " + name);
 
-        setFood('');
-        setCalories('');
         changeDailyCalories();
     }
 
