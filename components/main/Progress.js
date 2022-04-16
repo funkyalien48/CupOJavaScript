@@ -37,10 +37,13 @@ function Progress() {
         <LinearGradient colors={[colors.lightBlue, colors.darkBlue]} style={styles.outerScreen}>
         <SafeAreaView style = {styles.contentCenter}>
             <StatusBar barStyle='light-content' />
-            <Text style={styles.pageHeader}>Progress</Text>
-            <Pressable style={styles.addButton} title="Users List" onPress={() => setModalVisible((modalVisible) => !modalVisible)}>
-                <MaterialCommunityIcons name="plus" color={'#fff'} size={26} />
-            </Pressable>
+            <View style={styles.header}>
+                <Text style={styles.blank}>blank</Text>
+                <Text style={styles.pageHeader}>Progress</Text>
+                <Pressable style={styles.addButton} title="Users List" onPress={() => setModalVisible((modalVisible) => !modalVisible)}>
+                    <MaterialCommunityIcons name="plus" color={'#fff'} size={26} />
+                </Pressable>
+            </View>
             <View style={styles.innerScreen}>
                 <Modal
                     animationType="fade"
@@ -54,7 +57,8 @@ function Progress() {
                             <Text style={styles.inputHeader}>Enter Weight</Text>
                             <TextInput 
                                 style = {styles.weightInput}
-                                placeholder = "Weight"
+                                keyboardType='numeric'
+                                placeholder = 'Weight'
                                 returnKeyType = 'done'
                                 onChangeText = {editedWeight => setWeight(editedWeight)}
                             />
@@ -109,10 +113,12 @@ const styles = {
         backgroundColor: "#FFFFFF"
     },
     weightInput: {
-        padding: '10px',
+        padding: 10,
         fontSize: 20,
         width: '100%',
-        border: '1px solid #ddd',
+        borderWidth: '1px',
+        borderColor: '#ddd',
+        borderStyle: 'solid',
         borderRadius: 5,
         color: '#000'
     },
@@ -142,7 +148,7 @@ const styles = {
     },
     logWeightSection: {
         width: '100%',
-        height: '50px',
+        height: 50,
         flexDirection: 'row',
         justifyContent: 'end',
         alignItems: 'center',
@@ -204,11 +210,11 @@ const styles = {
         fontSize: '17pt',
         fontWeight: 'bold'
     },
-    addButton: {
-        position: 'absolute',
-        top: 7,
-        right: 15
-    },
+    // addButton: {
+        // position: 'absolute',
+        // top: 50,
+        // right: 25
+    // },
     green: {
         color: '#228220'
     },
@@ -227,9 +233,21 @@ const styles = {
     },
     bar: {
         width: '100%',
-        height: '1px',
+        height: 1,
         backgroundColor: '#eee',
         marginBottom: 45,
+    },
+    header: {
+        width: '100%',
+        height: 42,
+        paddingRight: 15,
+        paddingLeft: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    blank: {
+        opacity: 0
     }
 }
 
