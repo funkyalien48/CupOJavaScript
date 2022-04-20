@@ -52,6 +52,14 @@ const profileStyles = StyleSheet.create({
         marginLeft: '10%',
         marginBottom: 7
     },
+    profilePicAdd:
+    {
+        fontSize: 15,
+        fontFamily: 'Montserrat-SemiBold',
+        color: "#5580AA",
+        marginBottom: 7,
+        alignItems: 'center'
+    },
     profileInput:
     {
         fontSize: 20,
