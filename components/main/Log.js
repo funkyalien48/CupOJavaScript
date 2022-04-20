@@ -174,7 +174,7 @@ export default function Log() {
             <StatusBar barStyle='light-content' />
             <Text style={styles.pageHeader}>Log</Text>
             <View style = {styles.logScreen}>
-            <View style={{ alignItems: 'center',justifyContent: 'center' }}>
+            <View style={{ alignItems: 'center'}}>
                 <View style = {styles.logRow}>
                     <Text style = {styles.logData}>Are you ready to {purpose} weight !? Here, you can track your daily calories to help you reach your goals. </Text>
                 </View>
