@@ -236,7 +236,6 @@ export default function Log() {
                     onEndReachedThreshold = {1}
                     keyExtractor = {(item, index) => index.toString()}
                     />
-=======
                 <View style = {{ alignItems: 'center' }}>
 
                     <View style = {styles.logRow}>
@@ -304,6 +303,7 @@ export default function Log() {
                         onEndReachedThreshold = {1}
                         keyExtractor = {(item, index) => index.toString()}
                         />               
+                </View>
                 </View>
             </View>
         </SafeAreaView>
