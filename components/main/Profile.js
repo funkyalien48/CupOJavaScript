@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { StatusBar } from 'expo-status-bar'
 import fire from '../fire'
-import { Text, View, Button, TextInput, Image } from 'react-native'
+import { Text, View, Button, TextInput, Image, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient';
 import MaterialCommunityIcons from '@react-navigation/material-bottom-tabs'
@@ -13,7 +13,7 @@ const handleLogout = () =>
     fire.auth().signOut();
 }
 
-export default function Profile()
+export default function Profile({ navigation })
 {    
     const usersDB = fire.firestore().collection('users')
     const userID = fire.auth().currentUser.uid
@@ -157,7 +157,11 @@ export default function Profile()
                     <Text style = {profileStyles.pageHeader}>Profile</Text>
                     <Image source={{ uri: profilePic }} style={profileStyles.profilePicture}/>
                 </View>
-
+                <Pressable onPress={() => {  navigation.navigate('AddContainer')   }}>
+                    <View style = {{flexDirection: 'row',justifyContent: 'center', marginLeft: 50, marginBottom: 30}}>
+                        <Text style = {profileStyles.profilePicAdd}>{"Update Profile Picture"} </Text>
+                    </View>
+                </Pressable>
                 <View style = {profileStyles.profileRow}>
                 <Text style = {profileStyles.profileData}>Name  </Text><TextInput 
                     style = {profileStyles.profileInput}
@@ -226,7 +230,7 @@ export default function Profile()
                 <View style = {profileStyles.profileRow}>
                 <Text style = {profileStyles.profileData}>Hobbies  </Text><TextInput 
                     style = {profileStyles.profileInput}
-                    placeholder = { age.toString() }
+                    placeholder = { hobbies.toString() }
                     returnKeyType = 'done'
                     onChangeText = {editedHobbies => newHobbies = editedHobbies}
                 />

@@ -173,6 +173,70 @@ export default function Log() {
             <StatusBar barStyle='light-content' />
             <Text style = {styles.pageHeader}>Log</Text>
             <View style = {styles.logScreen}>
+            <View style={{ alignItems: 'center'}}>
+                <View style = {styles.logRow}>
+                    <Text style = {styles.logData}>Are you ready to {purpose} weight !? Here, you can track your daily calories to help you reach your goals. </Text>
+                </View>
+
+                <View style = {styles.logRow}>
+                    <Text style = {styles.logData}>Date: {logDate.toString()}</Text>
+                </View>
+
+                <View style = {styles.logRow}>
+                    <Text style = {styles.logData}>Daily Calories to maintain weight: {Math.round(recommendedCalories)} Cal</Text>
+                </View>
+
+                <View style = {styles.logRow}>
+                    <Text style = {styles.logData}>Daily Calories to {purpose} 1 lb: {Math.round(purposeCalories)} Cal</Text>
+                </View>
+
+                <View style = {styles.logRow}>
+                    <Text style = {styles.logData}>Current Daily Calories: {dailyCalories} Cal</Text>
+                </View>
+
+                <View style = {styles.logRow}>
+                    <TextInput 
+                        style = {styles.nameInput}
+                        placeholder = "Name of food"
+                        returnKeyType = 'done'
+                        onChangeText = {editedFoodName => newFoodName = editedFoodName}
+                    />
+                    <TextInput 
+                        style = {styles.calorieInput}
+                        placeholder = "Cals"
+                        returnKeyType = 'done'
+                        onChangeText = {editedFoodCalories => newFoodCalories = editedFoodCalories}
+                      //  onSubmit= {startIndex}
+                    />
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
+                <Button
+                        title = 'Add Food'
+                        onPress = {() => validateFoodInputs(newFoodName, newFoodCalories) && startIndex}
+                    />
+                    {/* <Button
+                    title = 'Refresh'
+                    onPress = {() => getUserInfo()}
+                /> */}
+                     
+
+                </View>
+                <FlatList
+                    data={dailyFood}
+                    renderItem={({item}) => 
+                        <View style = {styles.foodData}>
+                            {item.createdAt === logDate &&
+                                <View style={{ flex: 1, flexDirection: 'row'}}>
+                                <Text style= {styles.foodName}>{item.name}{" "}</Text>
+                                <Text style= {styles.foodCalories}>{item.calories}</Text>
+                            </View>
+                            }
+                        </View>}
+                    onEndReached = {() => continueList(startIndex, endIndex)}
+                    onEndReachedThreshold = {1}
+                    keyExtractor = {(item, index) => index.toString()}
+                    />
+=======
                 <View style = {{ alignItems: 'center' }}>
 
                     <View style = {styles.logRow}>
@@ -239,8 +303,7 @@ export default function Log() {
                         onEndReached = {() => continueList(startIndex, endIndex)}
                         onEndReachedThreshold = {1}
                         keyExtractor = {(item, index) => index.toString()}
-                        />
-                    
+                        />               
                 </View>
             </View>
         </SafeAreaView>

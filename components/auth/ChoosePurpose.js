@@ -24,7 +24,8 @@ export default class CreateProfile extends Component {
             weight: this.props.route.params.weight,
             bmi: this.props.route.params.bmi,
             purpose: '',
-            id: ''
+            id: '',
+            hobbies: this.props.route.params.hobbies
         }
         this.onSignUp = this.onSignUp.bind(this)
     }
@@ -48,6 +49,7 @@ export default class CreateProfile extends Component {
                 weight,
                 bmi,
                 purpose,
+                hobbies,
                 profilePicId: 'https://firebasestorage.googleapis.com/v0/b/weightexchangeapplication.appspot.com/o/image%2Fdefault-avatar.jpg?alt=media&token=057e9e50-5f95-4123-967c-ede0dea7076a',
                 id: fire.auth().currentUser.uid,
             }).then(() => 
