@@ -33,7 +33,7 @@ export default class CreateProfile extends Component {
     //TODO: process codes for errors and display to user
     onSignUp = () => 
     {
-        const { first_name, last_name, sex, age, feet, inches, weight, bmi, purpose } = this.state;
+        const { first_name, last_name, sex, age, feet, inches, weight, bmi, purpose, hobbies } = this.state;
 
         fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((result) => 
         {
