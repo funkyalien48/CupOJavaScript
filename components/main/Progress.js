@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Text, View, Pressable, Modal, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -6,6 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import colors from '../../assets/colors/colors'
 import fire from '../fire'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import LineChart from './LineChart'
 
 function Progress() {
     const usersDB = fire.firestore().collection('users')
@@ -13,7 +14,7 @@ function Progress() {
     const [modalVisible, setModalVisible] = useState(false);
     const [weight, setWeight] = useState('');
     let today = new Date();
-    let logDate = today.toDateString(today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate());
+    let logDate = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
 
     function logWeight() {
         const loggedWeight = {
@@ -31,6 +32,62 @@ function Progress() {
         });
 
         setModalVisible(!modalVisible)
+        loadData();
+    }
+
+    const [chartData, setChartData] = useState({
+        labels: [],
+        datasets: [{
+            label: 'Weight Progress',
+            data: [],
+            fill: true,
+            backgroundColor: 'rgba(0, 224, 255, 0.5)',
+            color: 'rgba(0, 224, 255, 0.3)'
+        }]
+    });
+
+    useEffect(() => {
+        loadData()
+    }, [])
+
+    const loadData = async () => {
+        let data =  await getWeightData();
+
+        let weight = [];
+        data.forEach((element) => {
+            weight.push(element.weight)
+        })
+
+        let date = [];
+        data.forEach((element) => {
+            date.push(element.date)
+        })
+
+        setChartData({
+            labels: date,
+            datasets: [{
+                label: 'Weight Progress',
+                data: weight,
+                fill: true,
+                backgroundColor: 'rgba(0, 224, 255, 0.5)',
+                color: 'rgba(0, 224, 255, 0.8)'
+            }]
+        })
+    }
+
+    const getWeightData = async () => {
+        let data = [];
+        await usersDB.doc(userID).collection('LoggedWeight').get()
+        .then((querySnapshot) => {
+            data = querySnapshot.docs.map(doc => doc.data());
+        })
+        .catch((error) => console.log('Error getting weight data: ', error));
+
+        data.sort(function(a,b) {
+            return new Date(a.date) - new Date(b.date)
+        })
+
+        return data;
     }
 
     return (
@@ -45,6 +102,7 @@ function Progress() {
                 </Pressable>
             </View>
             <View style={styles.innerScreen}>
+                <LineChart chartData={chartData} />
                 <Modal
                     animationType="fade"
                     transparent={true}
