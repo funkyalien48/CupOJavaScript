@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, FlatList, Button, TouchableOpacity } from 'react-native'
+import { Text, View, FlatList, Pressable, SafeAreaView, Image} from 'react-native'
 import fire from '../fire'
 
 function FriendRequests() {
@@ -72,17 +72,27 @@ function FriendRequests() {
                     keyExtractor={(item) => item.userID}
                     data={friendRequests}
                     renderItem={({ item }) => (
-                        <View>
-                        <Text>{item.first_name + " " + item.last_name + " wants to send you a friend request"}</Text>
-                            <Button
-                                title="Accept"
-                                onPress={() => acceptFriendRequest(item)}
-                            />
-                            <Button
-                                title="Reject"
-                                onPress={() => removeFriendRequest(item)}
-                            />
+                        <SafeAreaView style={styles.container}>
+                        <View style={styles.fixToText}>
+                        <View style = {[styles.profileData, styles.text]}>
+                            <Image source={{uri: item.profilePicId}} style={styles.profilePicture}/>
                         </View>
+                        <Text style={styles.title}>{item.first_name + " " + item.last_name + "\n" +
+                        " sent you a friend request."}</Text>   
+                        <View style={styles.fixToText}>
+                            <Pressable style={styles.buttonTitle}
+                                title="Accept"
+                                onPress={() => acceptFriendRequest(item)}>
+                                <Text> Accept </Text>
+                            </Pressable>
+                            <Pressable style={styles.buttonTitle}
+                                title="Reject"
+                                onPress={() => removeFriendRequest(item)}>
+                                <Text> Reject </Text>
+                            </Pressable>
+                        </View>
+                        </View>
+                        </SafeAreaView>
                     )}
                 />
             }
@@ -94,6 +104,47 @@ const styles = {
     centerView: {
         width: '100%',
         height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      marginHorizontal: 0,
+    },
+    title: {
+      textAlign: 'center',
+      marginVertical: 8,
+      fontSize: 13,
+    },
+    text: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    fixToText: {
+      flexDirection: 'row',
+      height: 80,
+    },
+    profilePicture: {
+        marginLeft: 10,
+        marginTop: 10,
+        width: 50,
+        height: 50,
+        borderRadius: 100,
+    },
+    profileData: {
+        borderWidth: 0.0,
+        borderColor: "#D3D3D3",
+        alignItems: 'baseline'
+    },
+    buttonTitle: {
+        backgroundColor: 'rgba(39, 209, 245, 0.8)',
+        borderRadius: 100,
+        paddingTop: 10,
+        paddingBottom: 10,
+        width: '30%',
+        height: 30,
+        textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center'
     }
