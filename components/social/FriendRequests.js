@@ -56,7 +56,6 @@ function FriendRequests() {
         const doc = snapshot.docs[0];
         doc.ref.delete();
 
-        console.log(doc.id);
         return doc.id;
     }
 
