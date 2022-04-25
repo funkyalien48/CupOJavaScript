@@ -6,7 +6,6 @@ import { Text, View, Button, TextInput, Image, FlatList, TouchableOpacity, useEf
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import colors from '../../assets/colors/colors'
-import { getMediaLibraryPermissionsAsync } from 'expo-image-picker'
 
 export default function Log() {
 
@@ -34,11 +33,10 @@ export default function Log() {
     const [startIndex, setStartIndex] = useState(5);
     const [endIndex, setEndIndex] = useState(10);
 
+    const [food, setFood] = useState('');
+    const [calories, setCalories] = useState('');
     const [userDataIsRetrieved, setUserDataIsRetrieved] = useState(false);
     let newDailyFood = undefined;
-    let newFoodName = "";
-    let newFoodCalories = "";
-    
 
     function updateLog() {
         usersDB.doc(userID).collection("DailyFood").add(newDailyFood)
@@ -115,6 +113,8 @@ export default function Log() {
         updateLog();
         alert("You added: " + name);
 
+        setFood('');
+        setCalories('');
         changeDailyCalories();
     }
 
@@ -208,29 +208,31 @@ export default function Log() {
                                     borderBottomLeftRadius: 20, backgroundColor: "#FFFFFF", padding: 10, marginBottom: 30}}>
                         <TextInput 
                             style = {styles.nameInput}
-                            placeholder = "Name of food"
+                            placeholder = "Food"
                             returnKeyType = 'done'
-                            onChangeText = {editedFoodName => newFoodName = editedFoodName}
+                            value={food}
+                            onChangeText = {(text) => setFood(text)}
+                            onSubmitEditing={() => {
+                                setFood('');
+                            }}
                         />
                         <TextInput 
                             style = {styles.calorieInput}
-                            placeholder = "Cals"
+                            placeholder = "Calories"
                             returnKeyType = 'done'
-                            onChangeText = {editedFoodCalories => newFoodCalories = editedFoodCalories}
+                            value={calories}
+                            onChangeText = {(text) => setCalories(text)}
+                            onSubmitEditing={() => {
+                                setCalories('');
+                            }}
                         //  onSubmit= {startIndex}
                         />
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
                     <Button
                             title = 'Add Food'
-                            onPress = {() => validateFoodInputs(newFoodName, newFoodCalories) && startIndex}
+                            onPress = {() => validateFoodInputs(food, calories) && startIndex}
                         />
-                        {/* <Button
-                        title = 'Refresh'
-                        onPress = {() => getUserInfo()}
-                    /> */}
-                        
-
                     </View>
                     <FlatList
                         data={dailyFood}
@@ -269,14 +271,6 @@ const styles = {
     logData: {
         fontSize: 20,
     },
-
-    // logSpace: {
-    //     flexDirection: 'row',
-    //     width: '100%',
-    //     backgroundColor: '#D9D7D7',
-    //     padding: 10
-    // },
-
     logPurpose: {
         flexDirection: 'row',
         width: '100%',
@@ -300,7 +294,7 @@ const styles = {
     },
     calorieInput: {
         fontSize: 20,
-        width: 50
+        width: 100
     },
     nameInput: {
         fontSize: 20,
@@ -330,5 +324,4 @@ const styles = {
         color: '#000',
         fontFamily: 'NunitoSans-Regular',
     }
-
 }
