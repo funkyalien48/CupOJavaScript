@@ -1,8 +1,7 @@
 import React, {useState} from 'react'
 import { StatusBar } from 'expo-status-bar'
-
 import fire from '../fire'
-import { Text, View, Button, TextInput, Image, FlatList, TouchableOpacity, useEffect } from 'react-native'
+import { Text, View, Button, TextInput, Image, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient'
 import colors from '../../assets/colors/colors'
@@ -38,6 +37,7 @@ export default function Log() {
     const [userDataIsRetrieved, setUserDataIsRetrieved] = useState(false);
     let newDailyFood = undefined;
 
+    // updateLog() - adds the new food added to firebase
     function updateLog() {
         usersDB.doc(userID).collection("DailyFood").add(newDailyFood)
         .then((result) => {
@@ -51,6 +51,7 @@ export default function Log() {
         setUserDataIsRetrieved(false);
     }
       
+    // getUserInfo() - Retrieves all user info from firebase
     const getUserInfo = () => {
         usersDB.doc(userID).get()
         .then((snapshot => {
@@ -72,6 +73,7 @@ export default function Log() {
             setDailyFood(dailyFoodData);
             setSplitDailyFood(dailyFoodData.slice(0, 5));
             setUserDataIsRetrieved(true);
+            // Update calories shown to user to reflect whhat is in the database
             changeDailyCalories();
         })
         .catch((error) => {
@@ -79,6 +81,7 @@ export default function Log() {
         });
     }
 
+    // validateFoodInputs() - validates the food inputs that the user enters in the input boxes
     function validateFoodInputs(name, calories) {
         let errorMsg = 'Invalid fields:';
         let isError = false;
@@ -98,26 +101,30 @@ export default function Log() {
             alert(errorMsg);
             isError = false;
         }
-        //If everything is valid
+        // If everything is valid
         else {
             typeNewFood(name, calories);
         }
     }
 
+    // typeNewFood() - creates a new food object with name, calories, and a timestamp as attributes to store to the database
+    // in the users LoggedWeight collection
     function typeNewFood(name, calories) {
         let timestamp = logDate;
 
         newDailyFood = {name: name, calories: calories, createdAt: timestamp};
-        // let id = Object.keys(newDailyFood).length + 1;
-        // newDailyFood[id] = {name: name, calories: calories};
+
+        // Call updateLog to add this food entered to firebase
         updateLog();
         alert("You added: " + name);
 
+        // Update the state of the component to clear input boxes and show latest food
         setFood('');
         setCalories('');
         changeDailyCalories();
     }
 
+    // changeDailyCalories() - Calculate the amount of calories the user has consumed for the day
     function changeDailyCalories() {
         let currentCals = 0;
 
@@ -130,9 +137,10 @@ export default function Log() {
         setDailyCalories(currentCals);
     }
 
-    //Recommended calories to maintain weight   
-    //BMR 
-    //Harris-Benedict Formula
+    // Recommended calories to maintain weight   
+    // BMR 
+    // Harris-Benedict Formula
+    // calculateCalories() - Calculate the users calories based on their gender, height, weight, age, and bmi
     function calculateCalories() {
         let calories = "";
 
@@ -148,6 +156,7 @@ export default function Log() {
         calculatePurposeCalories(calories);
     }
 
+    // continueList() - This function retrieves more items from the database to display to the user
     const continueList = (start, end) => {
         setSplitDailyFood(splitDailyFood.concat(dailyFood.slice(start, end)));
         setStartIndex(startIndex + 5);
@@ -164,6 +173,8 @@ export default function Log() {
         }   
     }
 
+    // By default the userDataIsRetrieved useState hook is set to false
+    // If it is false then getUserInfo() will be called to get userInfo
     if (userDataIsRetrieved == false) {
         getUserInfo();
     }
@@ -225,7 +236,6 @@ export default function Log() {
                             onSubmitEditing={() => {
                                 setCalories('');
                             }}
-                        //  onSubmit= {startIndex}
                         />
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
@@ -279,7 +289,6 @@ const styles = {
         fontWeight: 'bold',
         padding: 10
     },
-
     logRow: {
         flexDirection: 'row',
         width: '100%',

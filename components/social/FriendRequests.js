@@ -9,6 +9,7 @@ function FriendRequests() {
 
     const [friendRequests, setFriendRequests] = useState(null);
 
+    // Retrieves friendRequests from firebase
     useEffect(() => {
         usersDB.doc(currentUserID).collection('friendRequests').get()
             .then((querySnapshot) => {
@@ -23,12 +24,17 @@ function FriendRequests() {
             })
     }, [friendRequests])
     
-    //Current user accepts friend request. Friendship added
+    // acceptFreindRequest() - This function checks the database so that... (continued on next line)
+    // 1. Users do not have a friendship in the database
+    // 2. If friendship does not exist then create a friendship between the 2 users
+    // 3. Delete the friend request
+    // 4. You are now friends!
     function acceptFriendRequest(user2) {
         friendsDB.get().then(function(querySnapshot) {
             let friendshipData = querySnapshot.docs.map(doc => doc.data());
             let friendshipExists = false;
 
+            // Checks to see if a friendship between 2 users matches
             for (let i = 0; i < friendshipData.length; i++) {
                 if ((friendshipData[i].user1 == currentUserID && friendshipData[i].user2 == user2.userID) || 
                 (friendshipData[i].user2 == currentUserID && friendshipData[i].user1 == user2.userID)) {
@@ -36,24 +42,32 @@ function FriendRequests() {
                 }
             }
             
+            // If friendship does NOT exist -> write the friendship between 2 users to firebase
             if (!friendshipExists) {
+                // Create friendship in firebase between 2 users
                 friendsDB.add({user1: user2.userID, user2: currentUserID})
+                // delete the friend request from the receiving user
                 removeFriendRequest(user2);
+                // Alert the user that friend request has been accepted
                 alert('Friend request accepted');
             }
         }).catch(function(error) {console.log('Error getting documents: ', error)})
     }
 
-    // Calls an async function to delete a friend request that contains the user2 in that request
+    // removeFriendRequest() - Calls an async function to delete a friend request that contains the user2 in that request
     const removeFriendRequest = async (user2) => {
         await getFriendRequestByID(user2);
+        // Set friendRequests to null to refresh friendRequests
         setFriendRequests(null);
     } 
 
-    // Searches firebase for a document containing a friend request from user 2 by its id
+    // getFriendRequestByID() - Searches firebase for a document containing a friend request from user 2 by its id
     const getFriendRequestByID = async (user2) => {
+        // Query firebase where a friend request object contains the user that has sent the request by ID
         const snapshot = await usersDB.doc(currentUserID).collection('friendRequests').where('userID', '==', user2.userID).get();
+        // retrieve the document
         const doc = snapshot.docs[0];
+        // delete the document (friend request)
         doc.ref.delete();
 
         return doc.id;

@@ -8,6 +8,8 @@ import UserList from '../social/UserList'
 import FriendRequests from '../social/FriendRequests'
 
 export default function Social() {   
+    // useState hook to switch between userList component and friendRequests component
+    // Used to simulate 2 different pages on 1 page
     const [section, setSection] = useState('userList');
     
     return (

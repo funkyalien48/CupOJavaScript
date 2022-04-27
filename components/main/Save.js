@@ -1,12 +1,14 @@
 import React from 'react'
-import { View, Image, StyleSheet, Button, Text } from 'react-native'
+import { View, Image, Button } from 'react-native'
 
 import fire from '../fire'
 require("firebase/firestore")
 require("firebase/firebase-storage")
 
+// The Save screen after taking a photo, or choosing an image from gallery
 export default function Save(props) {
 
+    // uploadImage() - uploads an image to firebase
     const uploadImage = async ( type ) => {
         const uri = props.route.params.image;
         var childPath = '';
@@ -55,13 +57,3 @@ export default function Save(props) {
         </View>
     )
 }
-const styles = StyleSheet.create({
-    cameraContainer: {
-      flex: 1,
-      flexDirection: 'row',
-    },
-    fixedRatio: {
-      flex: 1,
-      aspectRatio: 2 / 3
-    }
-  })
