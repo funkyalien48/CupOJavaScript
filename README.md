@@ -36,13 +36,13 @@ Weight is “exchanged” between users to allow each other to reach their desir
 
 # Repo Location
 <details><summary>Expand</summary>
-  https://github.com/jzuniga3/COVID-NineTeam
+  https://github.com/funkyalien48/CupOJavaScript
   </details>
   
   
 # Jira
 <details><summary>Expand</summary>
-  https://jira.ggc.edu/projects/COVID9T/summary
+  https://jira.ggc.edu/projects/TCJ/summary
   </details>
   
 # Communication Tools
@@ -57,7 +57,7 @@ Weight is “exchanged” between users to allow each other to reach their desir
 <details><summary>Expand</summary>
   To run this app you will need a browser with Javascript, most do by default.
   To edit you will need a JS IDE such as Visual Studio Code.
-  To run this on you phone you will need the Expo app.
+  To run this on your phone you will need the Expo app.
   </details>
   
 
@@ -65,6 +65,7 @@ Weight is “exchanged” between users to allow each other to reach their desir
   
 # Technologies
 <details><summary>Expand</summary>
+  React-Native
   NodeJS
   Firebase
   Expo CLI
@@ -79,15 +80,11 @@ Weight is “exchanged” between users to allow each other to reach their desir
 <h3>Node.js</h3>
 Windows 10 & Mac OS
 
-1.Go to the site https://nodejs.org/en/download/ Node.js Installer for Windows & Mac
+1.Go to the site https://nodejs.org/en/
  
-2.Download the necessary binary files and the Node.js installer
+2.Download the Recommended version of Node (NOT THE LATEST OR CURRENT)
  
-3.Click on the downlaoded Node.js installer, and click "Run."
- 
-4.Follow all steps suggested by this installer.
- 
-5.MAC OS ONLY: Copy Node.js to your Applications folder
+3.Follow all steps suggested by this installer that was downloaded
  
 <h3>EXPO CLI</h3>
 Windows 10 & Mac OS
@@ -101,19 +98,33 @@ Windows 10 & Mac OS
 
 1.Got to https://firebase.google.com/
  
-2.Make sure you are logged into your google account, and click on "Get Started."
+2.Make sure you are logged into your google account, and click on "Go to console" in the top right corner.
  
-3.Click "Add Project."
+3.Click "Add Project"
  
-4.Follow the steps to create a Firebase Project
+4.Give your project a name & follow the steps to create a Firebase Project
  
 5.Navigate to the project settings
  
-6.Select the web platform under "Your Apps" section.
+6.Select the web platform under "Your Apps" section at the bottom
  
-7.Enter "Weight App" as the name of your product to register your app.
+7.Enter "Weight Exchange App" as the name of your product to register your app.
+
+8.Navigate to the "Authentication" page from the menu on the left side
+
+9.Click "Get Started" and choose "Email/Password" as the sign-in method.
+
+10.Enable Email/Password after choosing "Email/Password" and click Save
+
+11.Now navigate to "Storage" from the menu and click Get Started
+
+12.Select "Start in production mode" and click Next and confirm location and click Done
+
+13.Once storage is setup navigate to the Rules section in Storage
+
+14.Modify line 5 where it says "allow read, write: if false;" to "allow read, write: if request.auth != null;" (This will allow you to upload and retrieve profile photos)
  
-8.You can double check that firebase has been added to the project successfully by checking the dependencies in the pakacge.json file. package.json is in the root project folder.
+15.You can double check that firebase has been added to the project successfully by checking the dependencies in the package.json file. package.json is in the root project folder.
  
  <h3>Edamam API</h3>
 ONLY ONE PERSON NEEDS TO MAKE AN ACCOUNT
@@ -136,7 +147,7 @@ ONLY ONE PERSON NEEDS TO MAKE AN ACCOUNT
  
  
 To run open a terminal and navigate to your project folder and enter:
- expo start
+ npm start
 This should launch Expo in your browser where you can then run it as a web application, IOS app, or an android app.
   </details>
   
