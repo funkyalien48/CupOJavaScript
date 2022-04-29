@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { View, Text, Button, Image, Alert, Pressable } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select';
 import backButton from '../../assets/images/backButton.png'
-
-
 import fire from '../fire'
 
 export default class CreateProfile extends Component {
@@ -11,8 +9,8 @@ export default class CreateProfile extends Component {
     constructor(props) {
         super(props)
 
-        this.state = 
-        {
+        // Holds attributes of user which are passed in as props from CreateProfile.js
+        this.state = {
             email: this.props.route.params.email,
             password: this.props.route.params.password,
             first_name: this.props.route.params.first_name,
@@ -30,13 +28,13 @@ export default class CreateProfile extends Component {
         this.onSignUp = this.onSignUp.bind(this)
     }
 
-    //TODO: process codes for errors and display to user
-    onSignUp = () => 
-    {
+    // onSignUp() - create a new user in firebase collection users with the entered data
+    onSignUp = () => {
+        // retrieves all user attributes from the state to persist to database
         const { first_name, last_name, sex, age, feet, inches, weight, bmi, purpose, hobbies } = this.state;
 
-        fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((result) => 
-        {
+        // firebase write doc
+        fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((result) => {
             fire.firestore().collection("users")
             .doc(fire.auth().currentUser.uid)
             .set({
@@ -52,36 +50,31 @@ export default class CreateProfile extends Component {
                 hobbies,
                 profilePicId: 'https://firebasestorage.googleapis.com/v0/b/weightexchangeapplication.appspot.com/o/image%2Fdefault-avatar.jpg?alt=media&token=057e9e50-5f95-4123-967c-ede0dea7076a',
                 id: fire.auth().currentUser.uid,
-            }).then(() => 
-            {
+            }).then(() => {
                 console.log("Document successfully written!");
                 this.setState({ bmi: bmi });
             })
-            .catch((error) => 
-            {
+            .catch((error) => {
                 console.error("Error writing document: ", error);
             })
-        }).catch((error) => 
-        {
+        }).catch((error) => {
             console.log(error);
             Alert.alert('Error', error.message, [{text: 'OK'},], {cancelable: true});
         })
     }
 
-    validatePurpose = () =>
-    {
-        if (this.state.purpose != '' && this.state.purpose != 'Would you like to donate weight, or receive weight?')
-        {
+    // validatePurpose() - Validates that the user has chosen their purpose
+    validatePurpose = () => {
+        if (this.state.purpose != '' && this.state.purpose != 'Would you like to donate weight, or receive weight?') {
             this.onSignUp();
         }
-        else
-        {
+        else {
             alert('This field cannot be empty!')
         }
     }
 
     render() {
-        // inherit navigation from parent
+        // Destructure email and password from state to have access to these values
         const { navigate } = this.props.navigation;
 
         return (
@@ -114,37 +107,31 @@ export default class CreateProfile extends Component {
     }
 }
 
-const styles = 
-{
-    loginPrompt:
-    {
+const styles = {
+    loginPrompt: {
         marginTop: 30,
         marginLeft: 24,
         marginRight: 24,
         marginBottom: 70
     },
-    loginImage:
-    {
+    loginImage: {
         width: 250,
         height: 250,
         marginLeft: 20,
         marginTop: 30,
         marginBottom: 30,
     },
-    inputLabel:
-    {
+    inputLabel: {
         width: 280,
         height: 45,
         borderColor: "#43519D",
         backgroundColor: "#FFFFFF"
     },
-    userLabel:
-    {
+    userLabel: {
         fontSize: 20,
         color: "#414E93"
     },
-    contentCenter:
-    {
+    contentCenter: {
         height: '100%',
         backgroundColor: "#192879",
         alignItems: 'center'
@@ -155,11 +142,11 @@ const styles =
         justifyContent: 'center',
       },
     background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    height: '100%'
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        height: '100%'
     },
     logo: {
         width: 163,
@@ -187,7 +174,6 @@ const styles =
         color: '#FFF',
         fontFamily: 'NunitoSans-Regular',
         fontSize: 14
-
     },
     button: {
         color: '#FFF',

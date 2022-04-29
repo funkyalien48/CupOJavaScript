@@ -14,8 +14,8 @@ export default class CreateProfile extends Component {
     constructor(props) {
         super(props)
 
-        this.state =
-        {
+        // Holds the state that the user inputs which by default is an empty string
+        this.state = {
             email: this.props.route.params.email,
             password: this.props.route.params.password,
             first_name: '',
@@ -30,34 +30,29 @@ export default class CreateProfile extends Component {
         }
     }
 
-    //TODO: process codes for errors and display to user
+    // TODO: Verification that all data is valid and not empty
+    // onCreateProfile() - This function passes the user attributes as props to ChoosePurpose and
+    // navigates to ChoosePurpose page to continue registration
     onCreateProfile = () => {
+        // Retrieves the values for each attribute from the state
         const { email, password, first_name, last_name, sex, age, feet, inches, weight, hobbies } = this.state;
 
+        // Calculate the bmi for the user given the user attributes
         let bmiCalc = this.calcBMI();
 
+        // Navigate user to ChoosePurpose
         this.props.navigation.navigate("ChoosePurpose", { email: email, password: password, first_name: first_name, last_name: last_name, sex: sex, age: age, feet: feet, inches: inches, weight: weight, bmi: bmiCalc, hobbies: hobbies });
     }
 
-    // calcBMI = () => 
-    // {
-    //     var totalHeight = (this.state.feet * 12) + this.state.inches;
-
-    //     if(this.state.sex == "male")
-    //     {
-    //         return 66 + (6.3 * this.state.weight) + (12.9 * totalHeight) - (6.8 * this.state.age)
-    //     }
-    //     else
-    //     {
-    //         return 65 + (4.3 * this.state.weight) + (4.7 * totalHeight) - (4.7 * this.state.age)
-    //     }
-    // }
+    // calcBMI() - Calculates a User's BMI given the user input to store in the database to determine caloric intake
     calcBMI = () => {
         let totalHeight = (this.state.feet * 12) + parseFloat(this.state.inches);
         return ((this.state.weight * 703) / (totalHeight * totalHeight)).toFixed(2);
     }
 
 
+    // TODO: Rename function to something more meaningful (validateData, or validateInformation)
+    // validateNumbers() - This function validates the proper input from the user when inputting fields
     validateNumbers = () => {
         const { first_name, last_name, sex, age, feet, inches, weight, hobbies } = this.state;
         let errorMsg = 'Invalid fields:';
@@ -101,12 +96,14 @@ export default class CreateProfile extends Component {
         }
         //If everything is valid
         else {
+            // Call onCreateProfile to create the profile and continue registration process
+            // if all values are valid
             this.onCreateProfile();
         }
     }
 
     render() {
-        // inherit navigation from parent
+        // Destructure email and password from state to have access to these values
         const { navigate } = this.props.navigation;
 
         return (

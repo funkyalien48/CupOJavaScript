@@ -19,6 +19,7 @@ export default function UserList() {
     const [startIndex, setStartIndex] = useState(5);
     const [endIndex, setEndIndex] = useState(10);
 
+    // getCurrentUser() - Retrieve the user using the app
     function getCurrentUser() {
         usersDB.where('id', '==', currentUserID).get()
             .then((querySnapshot) => {
@@ -28,11 +29,12 @@ export default function UserList() {
             .catch((error) => console.log('Error getting current user: ', error));
     }
 
+    // if currentUser is null, call getCurrentUser to get the current user
     if(currentUser == null) {
         getCurrentUser();
     }
 
-    //Get user information from firestore
+    // getUsers() - Get user information from firestore
     const getUsers = () => {
         usersDB.get().then(function(querySnapshot) {
             let userData = querySnapshot.docs.map(doc => doc.data())
@@ -43,6 +45,7 @@ export default function UserList() {
         setUserDataIsRetrieved(true);
     }
 
+    // togglePopup() - toggles the popup when pressing a user in the list
     const togglePopup = (item) => {
         setPopupOpen(!popupOpen)
 
@@ -53,16 +56,20 @@ export default function UserList() {
         }
     }
 
+    // contnueList() - continue the list by another 5 users
     const continueList = (start, end) => {
         setSplitUserList(splitUserList.concat(userList.slice(start, end)));
         setStartIndex(startIndex + 5);
         setEndIndex(endIndex + 5);
     }
 
+    // IDEA - Change these if statements into useEffect hooks
+    // If userDataIsRetrieved is false the call getUsers() to get the users from the database
     if (userDataIsRetrieved == false) {
         getUsers();
     }
 
+    // checkFriends() - check if the user is friends with the current user
     function checkFriends(user2) {
         friendsDB.get()
             .then(function(querySnapshot) {
@@ -77,6 +84,7 @@ export default function UserList() {
         }).catch(function(error) {console.log('Error getting documents: ', error)})
     }
 
+    // sendFriendRequest() - write to the database to create a friend request to the user you want to become friends with
     function sendFriendRequest(user2) {
         usersDB.doc(user2.id).collection("friendRequests").get()
             .then(function(querySnapshot) {

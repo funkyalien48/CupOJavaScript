@@ -16,6 +16,7 @@ function Progress() {
     let today = new Date();
     let logDate = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
 
+    // logWeight() - Takes the weight inputted by the user and writes it to the database
     function logWeight() {
         const loggedWeight = {
             weight: weight,
@@ -31,10 +32,13 @@ function Progress() {
             Alert.alert('Error', error.message, [{text: 'OK'},], {cancelable: true});
         });
 
+        // setModalVisible is set to false so that modal is no longer visible
         setModalVisible(!modalVisible)
+        // call loadData to update graph with new weight
         loadData();
     }
 
+    // chartData useState hook that holds the default values and options for the chart
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [{
@@ -46,23 +50,30 @@ function Progress() {
         }]
     });
 
+    // loadData when component loads
     useEffect(() => {
         loadData()
     }, [])
 
+    // loadData() - Async function to retrieve data from the database to update chartData
     const loadData = async () => {
+        // get data from getWeigthData which returns a sorted array of LoggedWeight by date
         let data =  await getWeightData();
 
+        // Take the weight from the data array to separate from the date
         let weight = [];
         data.forEach((element) => {
             weight.push(element.weight)
         })
 
+        // Take the date from the data array to separate from the weight
         let date = [];
         data.forEach((element) => {
             date.push(element.date)
         })
 
+        // setChartData to pass in the date array for the labels and weight array for the weight logged for the
+        // corresponding date
         setChartData({
             labels: date,
             datasets: [{
@@ -75,18 +86,22 @@ function Progress() {
         })
     }
 
+    // getWeightData() - retrieves weight data from firebase and returns the data in an array that is sorted by date
     const getWeightData = async () => {
         let data = [];
+        // Load data from firebase to data variable
         await usersDB.doc(userID).collection('LoggedWeight').get()
         .then((querySnapshot) => {
             data = querySnapshot.docs.map(doc => doc.data());
         })
         .catch((error) => console.log('Error getting weight data: ', error));
 
+        // sort data by date
         data.sort(function(a,b) {
             return new Date(a.date) - new Date(b.date)
         })
 
+        // return sorted array
         return data;
     }
 
@@ -268,11 +283,6 @@ const styles = {
         fontSize: '17pt',
         fontWeight: 'bold'
     },
-    // addButton: {
-        // position: 'absolute',
-        // top: 50,
-        // right: 25
-    // },
     green: {
         color: '#228220'
     },

@@ -1,20 +1,17 @@
 import React, {useState} from 'react'
-import { StatusBar } from 'expo-status-bar'
 import fire from '../fire'
 import { Text, View, Button, TextInput, Image, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { LinearGradient } from 'expo-linear-gradient';
-import MaterialCommunityIcons from '@react-navigation/material-bottom-tabs'
 import colors from '../../assets/colors/colors';
 import profileStyles from '../../assets/styles/profileStyles'
 
-const handleLogout = () => 
-{
+// handleLogout() - signs the user out and navigates them back to the Register page
+const handleLogout = () => {
     fire.auth().signOut();
 }
 
-export default function Profile({ navigation })
-{    
+export default function Profile({ navigation }) {    
     const usersDB = fire.firestore().collection('users')
     const userID = fire.auth().currentUser.uid
 
@@ -40,68 +37,59 @@ export default function Profile({ navigation })
     let newInches = inches;
     let newHobbies = hobbies;
 
-    function validateProfileEdits()
-    {
-        if (userDataIsRetrieved)
-        {
+    // validateProfileEdits() - validates that the new values are valid that the user wants to udpate
+    function validateProfileEdits() {
+        if (userDataIsRetrieved) {
             let errorMsg = 'Invalid fields:';
             let isError = false;
 
             //Check if name is empty
-            if (newFirstName == '' || newLastName =='')
-            {
+            if (newFirstName == '' || newLastName =='') {
                 errorMsg += '\nName';
                 isError = true;
             }
             //Check if age is valid
-            if (newAge == '' || isNaN(newAge) || newAge < 1 || newAge > 120)
-            {
+            if (newAge == '' || isNaN(newAge) || newAge < 1 || newAge > 120) {
                 errorMsg += '\nAge';
                 isError = true;
             }
             //Check if height is valid
-            if (newInches == '' || isNaN(newInches) || newInches < 0 || newInches > 11 || newFeet == '' || isNaN(newFeet) || newFeet < 0 || newFeet > 10)
-            {
+            if (newInches == '' || isNaN(newInches) || newInches < 0 || newInches > 11 || newFeet == '' || isNaN(newFeet) || newFeet < 0 || newFeet > 10) {
                 errorMsg += '\nHeight';
                 isError = true;
             }
             //Check if weight is valid
-            if (newWeight == '' || isNaN(newWeight) || newWeight < 0 || newWeight > 1500)
-            {
+            if (newWeight == '' || isNaN(newWeight) || newWeight < 0 || newWeight > 1500) {
                 errorMsg += '\nWeight';
                 isError = true;
             }
 
               //Check if weight is valid
-              if (newWeight == '' || isNaN(newWeight) || newWeight < 0 || newWeight > 1500)
-              {
+              if (newWeight == '' || isNaN(newWeight) || newWeight < 0 || newWeight > 1500) {
                   errorMsg += '\nWeight';
                   isError = true;
               }
 
       //Check if hobbies section is empty
-      if (newHobbies == '')
-      {
+      if (newHobbies == '') {
           errorMsg += '\nHobbies';
           isError = true;
       }
 
             //If an error was detected.
-            if (isError == true)
-            {
+            if (isError == true) {
                 alert(errorMsg);
                 isError = false;
             }
             //If everything is valid
-            else
-            {
+            else {
                 updateProfile();
             }
         }
     }
 
-    const updateProfile = () =>
-    {
+    // updateProfile() - Takes the new values the user entered and updates those values in the database
+    const updateProfile = () => {
         usersDB.doc(userID).update({
             first_name: newFirstName,
             last_name: newLastName,
@@ -116,17 +104,15 @@ export default function Profile({ navigation })
         setUserDataIsRetrieved(false);
     }
 
-    const calcBMI = () =>
-    {
+    // calcBMI() - Calculate the BMI for the user after making changes to their age, height, or weight
+    const calcBMI = () => {
         let totalHeight = (feet * 12) + parseFloat(inches);
         return ((weight * 703) / (totalHeight * totalHeight)).toFixed(2);
     }
 
     //Get user information from firestore
-    const getUserInfo = () =>
-    {
-        usersDB.doc(userID).get().then((snapshot => 
-        {
+    const getUserInfo = () => {
+        usersDB.doc(userID).get().then((snapshot => {
             setFirstName(snapshot.data().first_name)
             setLastName(snapshot.data().last_name)
             setSex(snapshot.data().sex)
@@ -143,8 +129,9 @@ export default function Profile({ navigation })
         setUserDataIsRetrieved(true);
     }
 
-    if (userDataIsRetrieved == false)
-    {
+    // Uses the useState hook and is false by default when initiated. 
+    // If userDataIsRetrieved is false then call getUserInfo()
+    if (userDataIsRetrieved == false) {
         getUserInfo();
     }
 
