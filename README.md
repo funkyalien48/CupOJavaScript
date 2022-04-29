@@ -18,7 +18,7 @@ Agustin: UI/UX, Client Liason
 
 Anya: Team manager, Documentation Lead
 
-![anyaPic](https://github.com/funkyalien48/CupOJavaScript/blob/3049253320ee4fa00ac1beb054d2424f49bba479/Screen%20Shot%202022-02-23%20at%2012.26.44%20PM.png)
+<img src="https://github.com/funkyalien48/CupOJavaScript/blob/3049253320ee4fa00ac1beb054d2424f49bba479/Screen%20Shot%202022-02-23%20at%2012.26.44%20PM.png" width="50%" height="50%">
 
 Ashley: Data modeler
 
