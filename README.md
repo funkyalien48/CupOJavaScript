@@ -13,17 +13,20 @@ Dr. Ramata Cisse
 <h3>Team Structure</h3>
 
 Steven: Code architecture/lead programmer
+<img src=" https://github.com/funkyalien48/CupOJavaScript/blob/5f34537d474e9306fed77ecdc246ceadc6aee1d7/Screen%20Shot%202022-02-23%20at%2012.26.51%20PM.png" width="35%" height="35%">
 
 Agustin: UI/UX, Client Liason
+<img src="https://github.com/funkyalien48/CupOJavaScript/blob/5f34537d474e9306fed77ecdc246ceadc6aee1d7/Screen%20Shot%202022-02-23%20at%2012.27.08%20PM.png " width="35%" height="35%">
 
 Anya: Team manager, Documentation Lead
 
-<img src="https://github.com/funkyalien48/CupOJavaScript/blob/3049253320ee4fa00ac1beb054d2424f49bba479/Screen%20Shot%202022-02-23%20at%2012.26.44%20PM.png" width="10%" height="10%">
+<img src="https://github.com/funkyalien48/CupOJavaScript/blob/3049253320ee4fa00ac1beb054d2424f49bba479/Screen%20Shot%202022-02-23%20at%2012.26.44%20PM.png" width="35%" height="35%">
 
 Ashley: Data modeler
+<img src="https://github.com/funkyalien48/CupOJavaScript/blob/5f34537d474e9306fed77ecdc246ceadc6aee1d7/Screen%20Shot%202022-02-23%20at%2012.26.58%20PM.png " width="35%" height="35%">
 
 Chris: Testing Lead
-
+<img src="https://github.com/funkyalien48/CupOJavaScript/blob/5f34537d474e9306fed77ecdc246ceadc6aee1d7/Screen%20Shot%202022-02-23%20at%2012.27.17%20PM.png" width="35%" height="35%">
 
 # Description
 <details><summary>Expand</summary>
