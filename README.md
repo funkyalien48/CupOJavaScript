@@ -93,7 +93,8 @@ Weight is “exchanged” between users to allow each other to reach their desir
 
 # Developer Installation
 <details><summary>Expand</summary>
- Clone this repository to your workspace.
+ Developer installing video -> https://www.youtube.com/watch?v=4C8Zto7-6so
+ Look into the code with previous Lead Programmer -> https://youtu.be/LyBgwGTMkrU
  
  
 <h3>Node.js</h3>
@@ -143,12 +144,14 @@ Windows 10 & Mac OS
 
 14.Modify line 5 where it says "allow read, write: if false;" to "allow read, write: if request.auth != null;" (This will allow you to upload and retrieve profile photos)
  
-15.You can double check that firebase has been added to the project successfully by checking the dependencies in the package.json file. package.json is in the root project folder.
+15.Navigate to Firestore Database, go to rules section and modify the line where it says "allow read, write: if false;" to "allow read, write: if true;"
+ 
+16.You can double check that firebase has been added to the project successfully by checking the dependencies in the package.json file. package.json is in the root project folder.
  
  <h3>Edamam API</h3>
 ONLY ONE PERSON NEEDS TO MAKE AN ACCOUNT
 
-1.Go to https://developer.edamam.com/
+1.Go to https://edamam.com/
  
 2.Click on "APIs" on the navigation bar.
  
